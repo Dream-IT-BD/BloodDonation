@@ -1,5 +1,6 @@
 package com.example.blooddonation.MainFragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.util.Log;
@@ -20,15 +22,16 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.MainFragments.home.FragmentHome;
 import com.example.blooddonation.R;
+import com.example.blooddonation.databinding.FragmentFindBloodDonorBinding;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
@@ -39,18 +42,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class fragFindBloodDonor extends Fragment {
+public class FragmentFindBloodDonor extends Fragment {
 
 
     private static final String TAG = "fragFindBloodDonor";
-    ConstraintLayout findBloodDonorXML;
+    FragmentFindBloodDonorBinding binding;
     Context mContext;
     AutoCompleteTextView spinnerBloodGroup, spinnerGender, spinnerDivision, spinnerDistrict, spinnerUpazila;
-    TextInputEditText etPatientName, etPatientDiagnosis, etHospitalName, etBloodAmount;
+    TextInputEditText etPatientName, etPatientDiagnosis, etHospitalName, etHospitalAddress, etBloodAmount, etAdditionalNote;
     Button btnRegister;
     private ArrayList<String> divisions ,districts ,upazilas;
     String token;
-    LottieAnimationView animation;
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
 
 
     String requestingBloodGroup;
@@ -59,7 +63,7 @@ public class fragFindBloodDonor extends Fragment {
     int numberValidator;
 
 
-    public fragFindBloodDonor() {
+    public FragmentFindBloodDonor() {
         // Required empty public constructor
     }
 
@@ -73,12 +77,15 @@ public class fragFindBloodDonor extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.frag_find_blood_donor, container, false);
+        binding = FragmentFindBloodDonorBinding.inflate(inflater, container, false);
+        View view = inflater.inflate(R.layout.fragment_find_blood_donor, container, false);
 
         etPatientName = view.findViewById(R.id.etPatientName);
         etPatientDiagnosis = view.findViewById(R.id.etPatientDiagnosis);
         etHospitalName = view.findViewById(R.id.etHospitalName);
+        etHospitalAddress = view.findViewById(R.id.etHospitalAddress);
         etBloodAmount = view.findViewById(R.id.etBloodAmount);
+        etAdditionalNote = view.findViewById(R.id.etAdditionalNote);
 
         spinnerBloodGroup = view.findViewById(R.id.spinnerBloodGroup);
         spinnerGender = view.findViewById(R.id.spinnerGender);
@@ -116,13 +123,12 @@ public class fragFindBloodDonor extends Fragment {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Log.d(TAG, "onClick: @@@@@@@@@@@@@@@@                         Submit Button Clicked");
 
-//                emptyValidation();
+                //emptyValidation();
+                //bloodRequest();
 
-                bloodRequest();
-
+                popupWindow();
             }
         });
 
@@ -131,12 +137,8 @@ public class fragFindBloodDonor extends Fragment {
 
     private void bloodRequest() {
 
-//        String tokenTwo;
-//        tokenTwo = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYmxvb2QuZHJlYW1pdGRldmxvcG1lbnQuY29tXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2NDQwMDQ2NjYsImV4cCI6MTY0NDAwODI2NiwibmJmIjoxNjQ0MDA0NjY2LCJqdGkiOiJyNm5XNmdmVWFzZW5Kcks3Iiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.-1U4ov43DHtCutJg48WA11v8dNmhmwii_OOAYxnC5Y0";
-
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/create?token=" + token;
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -169,7 +171,7 @@ public class fragFindBloodDonor extends Fragment {
             @Override
             protected Map<String, String> getParams(){
 
-                String patient_name, patient_diagnosis, blood_group, blood_amount, gender, hospital_name, division, district, upazila;
+                String patient_name, patient_diagnosis, blood_group, blood_amount, gender, hospital_name, hospital_address, division, district, upazila, note;
 
                 patient_name = etPatientName.getText().toString().trim();
                 patient_diagnosis = etPatientDiagnosis.getText().toString().trim();
@@ -177,13 +179,15 @@ public class fragFindBloodDonor extends Fragment {
                 blood_amount = etBloodAmount.getText().toString().trim();
                 gender = spinnerGender.getText().toString();
                 hospital_name = etHospitalName.getText().toString().trim();
+                hospital_address = etHospitalAddress.getText().toString().trim();
                 division = spinnerDivision.getText().toString();
                 district = spinnerDistrict.getText().toString();
                 upazila = spinnerUpazila.getText().toString();
+                note = etAdditionalNote.getText().toString();
 
 
                 Log.d(TAG, "getParams: ............." + patient_name + "......" + patient_diagnosis +  "......" + blood_group + "....." + blood_amount + "........." + gender + "......" +
-                        hospital_name + "....." + division + "....." + district + "....." + upazila);
+                        hospital_name + "....." + hospital_address + "......." +  division + "....." + district + "....." + upazila + "......." + note);
 
                 Map<String, String> params = new HashMap<>();
                 params.put("patient_name",patient_name);
@@ -192,9 +196,11 @@ public class fragFindBloodDonor extends Fragment {
                 params.put("blood_amount", blood_amount);
                 params.put("gender",gender);
                 params.put("hospital_name",hospital_name);
+                params.put("hospital_address", hospital_address);
                 params.put("division",division);
                 params.put("district",district);
                 params.put("upazila",upazila);
+                params.put("note", note);
                 return params;
             }
         };
@@ -338,6 +344,35 @@ public class fragFindBloodDonor extends Fragment {
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGender.setAdapter(genderAdapter);
 
+    }
+
+    private void popupWindow(){
+
+        Button home;
+
+        dialogBuilder = new AlertDialog.Builder(mContext);
+        final View windowView = getLayoutInflater().inflate(R.layout.request_added_popup, null);
+
+        home = windowView.findViewById(R.id.goToHome);
+
+        dialogBuilder.setView(windowView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.hide();
+
+                Fragment fragment = new FragmentDashboard();
+
+                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.container, fragment).commit();
+                fragmentTransaction.addToBackStack(null);
+
+            }
+        });
     }
 
 // Empty Validator

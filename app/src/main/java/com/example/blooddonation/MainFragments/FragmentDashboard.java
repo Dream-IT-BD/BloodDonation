@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.blooddonation.MainFragments.home.BloodRequestDetailsFragment;
 import com.example.blooddonation.MainFragments.home.FragmentHome;
 import com.example.blooddonation.MainFragments.prevRequests.fragRequests;
 import com.example.blooddonation.R;
@@ -59,7 +58,7 @@ public class FragmentDashboard extends Fragment {
         binding.addBloodRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new fragFindBloodDonor();
+                Fragment fragment = new FragmentFindBloodDonor();
 
                 FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, fragment).commit();

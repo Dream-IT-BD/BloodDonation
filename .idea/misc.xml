@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/drawable/popup_bg.xml" value="0.138" />
+        <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/activity_register.xml" value="0.20729166666666668" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/frag_find_blood_donor.xml" value="0.20729166666666668" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/frag_profile.xml" value="0.20729166666666668" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/fragment_dashboard.xml" value="0.20729166666666668" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/fragment_profile_public_view.xml" value="0.20729166666666668" />
+        <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/layout_bg.xml" value="0.20729166666666668" />
+        <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/request_added_popup.xml" value="0.20729166666666668" />
       </map>
     </option>
   </component>
