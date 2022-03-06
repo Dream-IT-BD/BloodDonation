@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">BloodDonation</string>
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Trans</item>
+    </string-array>
+
+    <string-array name="blood_group">
+        <item>A+</item>
+        <item>A-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
+
+    <string-array name="division">
+        <item>Bogura</item>
+        <item>Rajshahi</item>
+        <item>Pabna</item>
+        <item>Natore</item>
+        <item>Dhaka</item>
+        <item>Chattagram</item>
+        <item>Borguna</item>
+        <item>Nouga</item>
+    </string-array>
+
+    <string name="open">open</string>
+    <string name="close">close</string>
+
+
+    <string name="dami_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

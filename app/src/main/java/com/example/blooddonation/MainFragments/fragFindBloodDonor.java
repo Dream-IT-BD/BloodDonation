@@ -1,0 +1,402 @@
+package com.example.blooddonation.MainFragments;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
+import android.text.Editable;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.R;
+import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class fragFindBloodDonor extends Fragment {
+
+
+    private static final String TAG = "fragFindBloodDonor";
+    ConstraintLayout findBloodDonorXML;
+    Context mContext;
+    AutoCompleteTextView spinnerBloodGroup, spinnerGender, spinnerDivision, spinnerDistrict, spinnerUpazila;
+    TextInputEditText etPatientName, etPatientDiagnosis, etHospitalName, etBloodAmount;
+    Button btnRegister;
+    private ArrayList<String> divisions ,districts ,upazilas;
+    String token;
+    LottieAnimationView animation;
+
+
+    String requestingBloodGroup;
+    String patientName, hospitalName, hospitalLocation;
+    Editable contactNumber;
+    int numberValidator;
+
+
+    public fragFindBloodDonor() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        mContext = context;
+        super.onAttach(context);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.frag_find_blood_donor, container, false);
+
+        etPatientName = view.findViewById(R.id.etPatientName);
+        etPatientDiagnosis = view.findViewById(R.id.etPatientDiagnosis);
+        etHospitalName = view.findViewById(R.id.etHospitalName);
+        etBloodAmount = view.findViewById(R.id.etBloodAmount);
+
+        spinnerBloodGroup = view.findViewById(R.id.spinnerBloodGroup);
+        spinnerGender = view.findViewById(R.id.spinnerGender);
+        spinnerDivision = view.findViewById(R.id.spinnerDivision);
+        spinnerDistrict = view.findViewById(R.id.spinnerDistrict);
+        spinnerUpazila = view.findViewById(R.id.spinnerUpazila);
+
+        btnRegister = view.findViewById(R.id.btnRegister);
+
+        divisions = new ArrayList<String>();
+        districts = new ArrayList<String>();
+        upazilas = new ArrayList<String>();
+
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
+        token = sharedPreferences.getString("token","");
+
+        getDivisionData();
+
+        spinnerConfig();
+
+        spinnerDivision.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getDistrictData();
+            }
+        });
+
+        spinnerDistrict.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getUpazilaData();
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@@                         Submit Button Clicked");
+
+//                emptyValidation();
+
+                bloodRequest();
+
+            }
+        });
+
+        return view;
+    }
+
+    private void bloodRequest() {
+
+//        String tokenTwo;
+//        tokenTwo = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYmxvb2QuZHJlYW1pdGRldmxvcG1lbnQuY29tXC9wdWJsaWNcL2FwaVwvbG9naW4iLCJpYXQiOjE2NDQwMDQ2NjYsImV4cCI6MTY0NDAwODI2NiwibmJmIjoxNjQ0MDA0NjY2LCJqdGkiOiJyNm5XNmdmVWFzZW5Kcks3Iiwic3ViIjoyLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.-1U4ov43DHtCutJg48WA11v8dNmhmwii_OOAYxnC5Y0";
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/create?token=" + token;
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "onResponse: @@@@@@@" +response);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String status = jsonObject.getString("status");
+
+                    Log.d(TAG, "onResponse:    Status           :     " + status);
+
+                    if (status.equals("success")){
+                        Toast.makeText(mContext, "Request Added", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse:    @@@@@@@@@@@@@      Volly Error : " +error);
+                Toast.makeText(mContext, "Request Faild", Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams(){
+
+                String patient_name, patient_diagnosis, blood_group, blood_amount, gender, hospital_name, division, district, upazila;
+
+                patient_name = etPatientName.getText().toString().trim();
+                patient_diagnosis = etPatientDiagnosis.getText().toString().trim();
+                blood_group = spinnerBloodGroup.getText().toString();
+                blood_amount = etBloodAmount.getText().toString().trim();
+                gender = spinnerGender.getText().toString();
+                hospital_name = etHospitalName.getText().toString().trim();
+                division = spinnerDivision.getText().toString();
+                district = spinnerDistrict.getText().toString();
+                upazila = spinnerUpazila.getText().toString();
+
+
+                Log.d(TAG, "getParams: ............." + patient_name + "......" + patient_diagnosis +  "......" + blood_group + "....." + blood_amount + "........." + gender + "......" +
+                        hospital_name + "....." + division + "....." + district + "....." + upazila);
+
+                Map<String, String> params = new HashMap<>();
+                params.put("patient_name",patient_name);
+                params.put("patient_diagnosis",patient_diagnosis);
+                params.put("blood_group",blood_group);
+                params.put("blood_amount", blood_amount);
+                params.put("gender",gender);
+                params.put("hospital_name",hospital_name);
+                params.put("division",division);
+                params.put("district",district);
+                params.put("upazila",upazila);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    private void getDivisionData() {
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String url = "https://blood.dreamitdevlopment.com/public/api/division";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("division");
+
+                            Log.d(TAG, "onResponse: @@@@@@@" + jsonArray);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject division = jsonArray.getJSONObject(i);
+
+                                divisions.add(division.getString("bn_name"));
+                            }
+
+                            /*for address select*/
+                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, divisions);
+                            spinnerDivision.setAdapter(divisionAdapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse:    " + error);
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    private void getDistrictData() {
+        districts.clear();
+        spinnerDistrict.setText(null);
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String url = "https://blood.dreamitdevlopment.com/public/api/district?district_id=" + spinnerDivision.getText().toString();
+
+// Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("district");
+
+                            Log.d(TAG, "onResponse: @@@@@@@" + jsonArray);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject division = jsonArray.getJSONObject(i);
+
+                                districts.add(division.getString("bn_name"));
+                            }
+
+                            /*for address select*/
+                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, districts);
+                            spinnerDistrict.setAdapter(divisionAdapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse:    " + error);
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    private void getUpazilaData(){
+
+        upazilas.clear();
+        spinnerUpazila.setText(null);
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String url = "https://blood.dreamitdevlopment.com/public/api/upazila?district_id=" + spinnerDistrict.getText().toString();
+
+// Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("upazila");
+
+                            Log.d(TAG, "onResponse: @@@@@@@" + jsonArray);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject upazila = jsonArray.getJSONObject(i);
+
+                                upazilas.add(upazila.getString("bn_name"));
+                            }
+
+                            /*for address select*/
+                            ArrayAdapter<String> upazilaAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, upazilas);
+                            spinnerUpazila.setAdapter(upazilaAdapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse:    " + error);
+            }
+        });
+        queue.add(stringRequest);
+    }
+
+    private void spinnerConfig() {
+        // Blood Group Spinner
+        ArrayAdapter<CharSequence> bloodGroupAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.blood_group,
+                android.R.layout.simple_spinner_item);
+        bloodGroupAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerBloodGroup.setAdapter(bloodGroupAdapter);
+
+        // Gender Selector Spinner
+        ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.gender,
+                android.R.layout.simple_spinner_item);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGender.setAdapter(genderAdapter);
+
+    }
+
+// Empty Validator
+//    private void emptyValidation() {
+//
+//        Log.d(TAG, "emptyValidation: @@@@@@@@@@@@@@@@@                   Empty Validating Starting here  : ");
+//
+//        requestingBloodGroup = spinnerBloodGroup.getText().toString();
+//
+//        patientName = etPatientFullName.getText().toString();
+//        hospitalName = etHospitalName.getText().toString();
+//        hospitalLocation = etHospitalLocation.getText().toString();
+//        contactNumber = etContactNumber.getText();
+//
+//        numberValidator = etContactNumber.getText().length();
+//
+//        if (patientName.isEmpty()){
+//            etPatientFullName.requestFocus();
+//            etPatientFullName.setError("Please Enter Patient name");
+//        }else if (hospitalName.isEmpty()){
+//            etHospitalName.requestFocus();
+//            etHospitalName.setError("Enter Hospital Name");
+//        }else if (hospitalLocation.isEmpty()){
+//            etHospitalLocation.requestFocus();
+//            etHospitalLocation.setError("Enter Hospital Location");
+//        }else if (contactNumber == null){
+//            etContactNumber.requestFocus();
+//            etContactNumber.setError("Enter Contact Number");
+//        }else if (numberValidator != 11){
+//            etContactNumber.requestFocus();
+//            etContactNumber.setError("Enter a valid number");
+//        }else if (requestingBloodGroup.isEmpty()){
+//            Toast.makeText(mContext, "Please Spacify the blood group.", Toast.LENGTH_SHORT).show();
+//        }else{
+////            Toast.makeText(mContext, "Request Successful", Toast.LENGTH_SHORT).show();
+//
+//            Snackbar bar = Snackbar.make(getView().findViewById(R.id.findBloodDonorXML), " ", Snackbar.LENGTH_LONG);
+//            bar.setText("Request Successful");
+//            bar.show();
+//        }
+//    }
+
+
+
+    // Submit Button Config
+
+// onClick Hint Changer
+    /*
+    //        etContactNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean b) {
+//                //         android:hint="Contact Number"
+//
+//                if (view.hasFocus()){
+//                    etContactNumber.setHint("Without +88");
+//                }else if (!view.hasFocus()){
+//                    etContactNumber.setHint("");
+//                }
+//            }
+//        });
+     */
+}
