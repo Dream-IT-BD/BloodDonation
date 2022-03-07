@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 
 import com.example.blooddonation.HomeActivity;
 import com.example.blooddonation.R;
+import com.example.blooddonation.databinding.LoginActivityBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
     String myMainAuthToken;
     public SharedPreferences sharedPreferences;
 
+    LoginActivityBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,43 +55,32 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
         sharedPreferences = getSharedPreferences("authToken", Context.MODE_PRIVATE);
 
-
-
 //        sharedPreferences = getApplicationContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);
 //        authToken = sharedPreferences.getString("token", "");
 
-        etPhone = findViewById(R.id.etPhone);
-        etPassword = findViewById(R.id.etPassword);
-
-        tvRegister = findViewById(R.id.tvRegister);
-        tvRegisterOne = findViewById(R.id.tvRegisterOne);
-        tvForgetPassword = findViewById(R.id.tvForgetPassword);
-
-        btnLogin = findViewById(R.id.btnLogin);
-
-        tvRegister.setOnClickListener(new View.OnClickListener() {
+        binding.tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
-        tvRegisterOne.setOnClickListener(new View.OnClickListener() {
+        binding.tvRegisterOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                finish();
+//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                finish();
             }
         });
 
-        tvForgetPassword.setOnClickListener(new View.OnClickListener() {
+        binding.tvForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, ForgetPassword.class));
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -175,8 +167,8 @@ public class LoginActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams(){
-                String phone = etPhone.getText().toString();
-                String pass = etPassword.getText().toString();
+                String phone = binding.etPhone.getText().toString();
+                String pass = binding.etPassword.getText().toString();
 
                 Log.d(TAG, "getParams: ..........................." + phone + "   ....  "  + pass);
 

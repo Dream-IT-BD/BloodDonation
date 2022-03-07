@@ -183,7 +183,9 @@ public class StatusDetailsFragment extends Fragment {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
 
-        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/user-view/"+id+"?token="+token;
+        //String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/user-view/"+id+"?token="+token;
+
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id+"?token="+token;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override

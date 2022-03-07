@@ -2,28 +2,26 @@ package com.example.blooddonation.MainFragments.home;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.blooddonation.databinding.FragmentBloodRequestDetailsViewBinding;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.blooddonation.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +34,10 @@ public class BloodRequestDetailsFragment extends Fragment {
     private static final String TAG = "Blood Request";
     Context mContext;
     String id;
+    String blood_need, blood_managed;
+    private int progressBarStatus = 0;
+    private Handler progressBarHandler = new Handler();
+
 
     // ViewBinding
     FragmentBloodRequestDetailsViewBinding binding;
@@ -60,7 +62,7 @@ public class BloodRequestDetailsFragment extends Fragment {
         id = getArguments().getString("id");
         Log.d(TAG, "onCreate: fragment id pass ..."+id);
 
-        fetchMadrasaDetails();
+        fetchRequestDetails();
 
         binding.donateNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +74,7 @@ public class BloodRequestDetailsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void fetchMadrasaDetails() {
+    private void fetchRequestDetails() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
@@ -95,11 +97,16 @@ public class BloodRequestDetailsFragment extends Fragment {
                     binding.district.setText(jsonObject.getString("district"));
                     binding.upazila.setText(jsonObject.getString("upazila"));
 
+                    blood_need = jsonObject.getString("blood_amount");
+                    binding.tvBloodNeed.setText("রক্ত প্রয়োজনঃ " + blood_need + " ব্যাগ");
+
                     String dateFromAPI = jsonObject.getString("updated_at");
 
                     String date = dateFromAPI.substring(0,10);
 
                     binding.tvDate.setText(date);
+
+                    bloodProgress();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -113,6 +120,16 @@ public class BloodRequestDetailsFragment extends Fragment {
         }) ;
         queue.add(stringRequest);
 
+    }
+
+    private void bloodProgress() {
+
+        binding.bloodProgress.getProgressDrawable().setColorFilter(
+                Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+
+        binding.bloodProgress.setProgress(2);
+        binding.bloodProgress.setMax(Integer.parseInt(blood_need));
+        binding.bloodProgress.setScaleY(3f);
     }
 
     private void interestedToDonate() {
