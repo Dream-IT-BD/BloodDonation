@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.MainFragments.prevRequests.completed.CompletedRequestItem;
 import com.example.blooddonation.MainFragments.prevRequests.managed.ManagedRequestAdapter;
 import com.example.blooddonation.MainFragments.prevRequests.managed.ManagedRequestItem;
@@ -40,6 +41,7 @@ public class FragmentManaged extends Fragment {
     FragmentManagedBinding binding;
     Context mContext;
     String token;
+    LoadingDialog loadingDialog;
     private List<ManagedRequestItem> managedRequestItems;
     private RecyclerView.Adapter managedRequestAdapter;
 
@@ -54,6 +56,9 @@ public class FragmentManaged extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentManagedBinding.inflate(inflater, container, false);
+        loadingDialog = new LoadingDialog(mContext);
+        loadingDialog.show();
+
         getManagedData();
 
         managedRequestItems = new ArrayList<>();
@@ -79,6 +84,8 @@ public class FragmentManaged extends Fragment {
             public void onResponse(String response) {
 
                 try {
+
+                    loadingDialog.hide();
 
                     Log.d(TAG, "onResponse: Data..........."+response);
 

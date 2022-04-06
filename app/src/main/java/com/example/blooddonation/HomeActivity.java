@@ -42,16 +42,12 @@ public class HomeActivity extends AppCompatActivity {
         name = sharedPreferences.getString("name", "");
         number = sharedPreferences.getString("number", "");
 
-        drawer = findViewById(R.id.drawer);
-        navigation = findViewById(R.id.navigation);
-        toolbar = findViewById(R.id.toolbar);
-
 
         setSupportActionBar(toolbar);
 
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new FragmentDashboard()).commit();
-        navigation.setCheckedItem(R.id.nav_home);
+        //navigation.setCheckedItem(R.id.nav_home);
 
         bottomBar();
     }

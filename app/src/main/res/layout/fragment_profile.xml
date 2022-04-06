@@ -19,15 +19,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:id="@+id/ivUserImage"
+        <com.airbnb.lottie.LottieAnimationView
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_marginTop="25dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/profile"
             tools:layout_editor_absoluteX="122dp"
-            tools:layout_editor_absoluteY="201dp" />
+            tools:layout_editor_absoluteY="201dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/profilepicture" />
 
         <TextView
             android:id="@+id/tvUserName"
@@ -41,13 +42,13 @@
             android:textStyle="bold|italic" />
 
         <TextView
-            android:id="@+id/tvUserEmail"
+            android:id="@+id/tvUserPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat"
-            android:text="useremail@gmail.com"
+            android:text="+8801234-567890"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="italic" />

@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.MainFragments.home.BloodRequestItem;
 import com.example.blooddonation.MainFragments.prevRequests.running.RunningRequestAdapter;
 import com.example.blooddonation.MainFragments.prevRequests.running.RunningRequestItem;
@@ -39,6 +40,7 @@ public class FragmentRunning extends Fragment {
     private static final String TAG = "FragmentRunning";
     Context mContext;
     FragmentRunningBinding binding;
+    LoadingDialog loadingDialog;
 
     private List<RunningRequestItem> runningRequestItems;
     private RecyclerView.Adapter runningRequestAdapter;
@@ -56,6 +58,8 @@ public class FragmentRunning extends Fragment {
         // Inflate the layout for this fragment
 
         binding = FragmentRunningBinding.inflate(inflater, container, false);
+        loadingDialog = new LoadingDialog(mContext);
+        loadingDialog.show();
 
         getRunningData();
         runningRequestItems = new ArrayList<>();
@@ -82,6 +86,9 @@ public class FragmentRunning extends Fragment {
             public void onResponse(String response) {
 
                 try {
+
+                    loadingDialog.hide();
+
                     runningRequestItems.clear();
                     JSONArray array = new JSONArray(response);
 

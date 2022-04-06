@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.MainFragments.prevRequests.completed.CompletedRequestAdapter;
 import com.example.blooddonation.MainFragments.prevRequests.completed.CompletedRequestItem;
 import com.example.blooddonation.databinding.FargmentCompletedBinding;
@@ -40,6 +41,7 @@ public class FargmentCompleted extends Fragment {
     private List<CompletedRequestItem> completedRequestItems;
     private RecyclerView.Adapter completedRequestAdapter;
     FargmentCompletedBinding binding;
+    LoadingDialog loadingDialog;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -51,6 +53,8 @@ public class FargmentCompleted extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FargmentCompletedBinding.inflate(inflater, container, false);
+        loadingDialog = new LoadingDialog(mContext);
+        loadingDialog.show();
 
         getCompletedData();
         completedRequestItems = new ArrayList<>();
@@ -76,6 +80,8 @@ public class FargmentCompleted extends Fragment {
             public void onResponse(String response) {
 
                 try {
+
+                    loadingDialog.hide();
 
                     Log.d(TAG, "onResponse: Data..........."+response);
 

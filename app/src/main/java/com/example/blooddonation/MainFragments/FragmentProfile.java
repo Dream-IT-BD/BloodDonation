@@ -21,9 +21,7 @@ public class FragmentProfile extends Fragment {
 
     FragmentProfileBinding binding;
     Context mContext;
-    TextView tvUserName, tvUserEmail;
-    String userNameFromHeader, userEmailFromHeader;
-    String token;
+    String token, name, number;
 
 
     public FragmentProfile() {
@@ -43,9 +41,12 @@ public class FragmentProfile extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token","");
+        name = sharedPreferences.getString("name", "");
+        number = sharedPreferences.getString("number", "");
 
-        tvUserName = binding.tvUserName;
-        tvUserEmail = binding.tvUserEmail;
+
+        binding.tvUserName.setText(name);
+        binding.tvUserPhone.setText(number);
 
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override

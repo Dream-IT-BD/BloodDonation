@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.databinding.FragHomeBinding;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -39,11 +40,8 @@ public class FragmentHome extends Fragment {
 
     private static final String TAG = "fragHome";
     Context mContext;
-    public NavigationView navigation;
-    ExtendedFloatingActionButton btnFloatingButton;
-    public DrawerLayout drawer;
     String token;
-    LottieAnimationView animation;
+    LoadingDialog loadingDialog;
 
     FragHomeBinding binding;
     private List<BloodRequestItem> bloodRequestItems;
@@ -65,6 +63,8 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragHomeBinding.inflate(inflater,container,false);
+        loadingDialog = new LoadingDialog(mContext);
+        loadingDialog.show();
 
         fetchBloodRequestData();
         bloodRequestItems = new ArrayList<>();
@@ -91,6 +91,9 @@ public class FragmentHome extends Fragment {
             public void onResponse(String response) {
 
                 try {
+
+                    loadingDialog.hide();
+
                     Log.d(TAG, "onResponse: Data..........."+response);
 
                     JSONArray array = new JSONArray(response);

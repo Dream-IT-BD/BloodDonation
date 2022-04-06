@@ -3,10 +3,12 @@ package com.example.blooddonation.Auth;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.L;
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,6 +30,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.blooddonation.HomeActivity;
+import com.example.blooddonation.LoadingDialog;
+import com.example.blooddonation.MainFragments.FragmentDashboard;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.LoginActivityBinding;
 import com.google.android.material.textfield.TextInputEditText;
@@ -39,15 +44,13 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextInputEditText etPhone, etPassword;
-    Button btnLogin;
-    TextView tvRegister, tvRegisterOne, tvForgetPassword;
-
     String myMainAuthToken;
     public SharedPreferences sharedPreferences;
-
     LoginActivityBinding binding;
-
+    TextInputEditText etPhone, etPassword;
+    TextView tvRegisterNow;
+    Button btnLogin;
+    LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,39 +58,31 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
         sharedPreferences = getSharedPreferences("authToken", Context.MODE_PRIVATE);
 
-//        sharedPreferences = getApplicationContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);
-//        authToken = sharedPreferences.getString("token", "");
+        loadingDialog = new LoadingDialog(LoginActivity.this);
 
-        binding.tvRegister.setOnClickListener(new View.OnClickListener() {
+        etPhone = findViewById(R.id.etPhone);
+        etPassword = findViewById(R.id.etPassword);
+        tvRegisterNow = findViewById(R.id.tvRegisterNow);
+        btnLogin = findViewById(R.id.btnLogin);
+
+        tvRegisterNow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
 
-        binding.tvRegisterOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                finish();
-            }
-        });
-
-        binding.tvForgetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, ForgetPassword.class));
-            }
-        });
-
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                loadingDialog.show();
 //                checkInternet();
 
                 loginRequest();
 //                nextActivityValidator();
+
 //                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
 //                    etPhone.setError("Enter a valid Email");
 //                    return;
@@ -140,7 +135,6 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d(TAG, "onResponse:    Name   :   " + name);
                     Log.d(TAG, "onResponse:    Number  :  " + number);
 
-
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", token);
                     editor.putString("name", name);
@@ -150,7 +144,9 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);
                     token = sharedPreferences.getString("token","");
 
+                    Toast.makeText(LoginActivity.this, "Login Done", Toast.LENGTH_SHORT).show();
 
+                    loadingDialog.hide();
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
 
@@ -161,14 +157,15 @@ public class LoginActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingDialog.hide();
                 Log.d(TAG, "onErrorResponse:    " +error);
                 Toast.makeText(LoginActivity.this, "Login Field", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams(){
-                String phone = binding.etPhone.getText().toString();
-                String pass = binding.etPassword.getText().toString();
+                String phone = etPhone.getText().toString().trim();
+                String pass = etPassword.getText().toString();
 
                 Log.d(TAG, "getParams: ..........................." + phone + "   ....  "  + pass);
 
@@ -181,6 +178,7 @@ public class LoginActivity extends AppCompatActivity {
         queue.add(stringRequest);
 
     }
+
 
     @Override
     protected void onStart() {

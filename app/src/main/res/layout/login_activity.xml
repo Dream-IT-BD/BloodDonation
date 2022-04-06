@@ -7,7 +7,6 @@
     android:id="@+id/loginActivity"
     tools:context=".Auth.LoginActivity">
 
-
     <ImageView
         android:id="@+id/ivBlood"
         android:layout_width="match_parent"
@@ -42,6 +41,8 @@
 
 
     </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -127,7 +128,7 @@
         app:layout_constraintVertical_bias="0.12" />
 
     <TextView
-        android:id="@+id/tvRegister"
+        android:id="@+id/tvRegisterNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
