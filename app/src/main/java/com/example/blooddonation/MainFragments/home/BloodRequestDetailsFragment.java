@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.blooddonation.databinding.FragmentBloodRequestDetailsViewBinding;
 
 import com.android.volley.Request;
@@ -23,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,9 +36,11 @@ public class BloodRequestDetailsFragment extends Fragment {
     private static final String TAG = "Blood Request";
     Context mContext;
     String id;
-    String blood_need, blood_managed;
+    String blood_need;
+    int blood_managed;
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
+
 
 
     // ViewBinding
@@ -64,6 +68,8 @@ public class BloodRequestDetailsFragment extends Fragment {
 
         fetchRequestDetails();
 
+        totalManagedDonorCounter();
+
         binding.donateNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +79,8 @@ public class BloodRequestDetailsFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+
 
     private void fetchRequestDetails() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
@@ -123,13 +131,35 @@ public class BloodRequestDetailsFragment extends Fragment {
     }
 
     private void bloodProgress() {
-
         binding.bloodProgress.getProgressDrawable().setColorFilter(
                 Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 
-        binding.bloodProgress.setProgress(2);
+        binding.bloodProgress.setProgress(blood_managed);
         binding.bloodProgress.setMax(Integer.parseInt(blood_need));
         binding.bloodProgress.setScaleY(3f);
+    }
+
+    private void totalManagedDonorCounter() {
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/managed-donor/" + id;
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
     }
 
     private void interestedToDonate() {

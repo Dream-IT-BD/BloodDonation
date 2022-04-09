@@ -23,6 +23,7 @@ public class RunningRequestAdapter extends RecyclerView.Adapter<RunningRequestAd
     private final Context context;
     private final FragmentRunning parent;
 
+
     public RunningRequestAdapter(List<RunningRequestItem> runningRequestItems, Context context, FragmentRunning parent) {
         this.runningRequestItems = runningRequestItems;
         this.context = context;
@@ -54,6 +55,8 @@ public class RunningRequestAdapter extends RecyclerView.Adapter<RunningRequestAd
                 Bundle arguments = new Bundle();
                 arguments.putString("id",data.getId());
                 fragment.setArguments(arguments);
+
+                String postID = data.getId();
 
                 FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, fragment).commit();

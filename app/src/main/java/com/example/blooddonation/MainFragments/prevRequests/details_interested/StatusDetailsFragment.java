@@ -1,7 +1,5 @@
 package com.example.blooddonation.MainFragments.prevRequests.details_interested;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentStatusDetailsBinding;
 
 import org.json.JSONArray;
@@ -65,11 +62,13 @@ public class StatusDetailsFragment extends Fragment {
         id = getArguments().getString("id");
         Log.d(TAG, "onCreate: fragment id pass ..."+id);
 
+        String postID = id;
+
+
         fetchRequestDetails();
 
 
-
-        // Interested People Work
+        // Interested People
 
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         binding.interestedPeopleRecyclerView.setLayoutManager(manager);
@@ -178,6 +177,7 @@ public class StatusDetailsFragment extends Fragment {
     }
 
     private void getInterestedDonorData() {
+
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
@@ -185,7 +185,7 @@ public class StatusDetailsFragment extends Fragment {
 
         //String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/user-view/"+id+"?token="+token;
 
-        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id+"?token="+token;
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -203,8 +203,9 @@ public class StatusDetailsFragment extends Fragment {
                                 JSONObject object1 = object.getJSONObject("user");
 
                                 InterestedDonorItem data = new InterestedDonorItem(
-                                        object1.getString("name")
-                                );
+                                        object1.getString("name"),
+                                        object.getString("blood_request_id"),
+                                        object.getString("user_id"));
 
                                 interestedDonorItems.add(data);
 

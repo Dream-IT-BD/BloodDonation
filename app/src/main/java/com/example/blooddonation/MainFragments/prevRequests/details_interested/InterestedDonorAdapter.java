@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blooddonation.MainFragments.home.BloodRequestDetailsFragment;
 import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentRunning;
+import com.example.blooddonation.MainFragments.prevRequests.running.RunningRequestAdapter;
+import com.example.blooddonation.MainFragments.prevRequests.running.RunningRequestItem;
 import com.example.blooddonation.MainFragments.userProfile.FragmentProfilePublicView;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.InterestedPeopleVecyclerItemBinding;
@@ -48,15 +51,15 @@ public class InterestedDonorAdapter extends RecyclerView.Adapter<InterestedDonor
         InterestedDonorItem data = interestedDonorItems.get(position);
         holder.binding.name.setText(data.getName());
 
-
-
         holder.binding.btnContactBloodDonor.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
                 Fragment fragment = new FragmentProfilePublicView();
-//                Bundle arguments = new Bundle();
-//                arguments.putString("id",data.getId());
-//                fragment.setArguments(arguments);
+                Bundle arguments = new Bundle();
+                arguments.putString("id", data.getBlood_request_id());
+                fragment.setArguments(arguments);
 
                 FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, fragment).commit();

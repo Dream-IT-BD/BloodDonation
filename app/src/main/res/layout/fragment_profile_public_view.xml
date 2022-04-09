@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:padding="5dp"
-            android:text="Shahir Islam"
+            android:text=" "
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="22sp"
@@ -77,7 +77,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="রাজশাহি"
+                    android:text=" "
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -109,7 +109,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="বগুড়া"
+                    android:text=" "
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/montserrat"
-                    android:text="বগুড়া সদর"
+                    android:text=" "
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -241,6 +241,25 @@
             android:textSize="20sp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnDonorManaged"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/green"
+        android:padding="10dp"
+        android:text="Donor Managed"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:icon="@drawable/phone"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/btnContactNow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnContactNow"

@@ -126,9 +126,9 @@ public class FragmentFindBloodDonor extends Fragment {
                 Log.d(TAG, "onClick: @@@@@@@@@@@@@@@@                         Submit Button Clicked");
 
                 //emptyValidation();
-                //bloodRequest();
+                bloodRequest();
 
-                popupWindow();
+
             }
         });
 
@@ -154,6 +154,7 @@ public class FragmentFindBloodDonor extends Fragment {
 
                     if (status.equals("success")){
                         Toast.makeText(mContext, "Request Added", Toast.LENGTH_SHORT).show();
+                        popupWindow();
                     }
 
 

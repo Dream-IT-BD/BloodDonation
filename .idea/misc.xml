@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/fragment_blood_request_details_view.xml" value="0.25" />
+        <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/fragment_find_blood_donor.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/fragment_profile.xml" value="0.20729166666666668" />
+        <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/fragment_profile_public_view.xml" value="0.22" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/fragment_status_details.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/loading_dialog.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/login_activity.xml" value="0.20729166666666668" />
