@@ -42,8 +42,6 @@ public class FragmentProfilePublicView extends Fragment {
     String id, userContactNumber, blood_request_id, user_id;
     String token;
 
-
-
     public FragmentProfilePublicView() {
         // Required empty public constructor
     }

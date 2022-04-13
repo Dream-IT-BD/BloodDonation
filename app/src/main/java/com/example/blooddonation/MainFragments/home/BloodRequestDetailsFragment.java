@@ -41,8 +41,6 @@ public class BloodRequestDetailsFragment extends Fragment {
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
 
-
-
     // ViewBinding
     FragmentBloodRequestDetailsViewBinding binding;
 
@@ -68,8 +66,6 @@ public class BloodRequestDetailsFragment extends Fragment {
 
         fetchRequestDetails();
 
-        totalManagedDonorCounter();
-
         binding.donateNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +75,6 @@ public class BloodRequestDetailsFragment extends Fragment {
 
         return binding.getRoot();
     }
-
 
 
     private void fetchRequestDetails() {
@@ -93,6 +88,8 @@ public class BloodRequestDetailsFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
+                totalManagedDonorCounter();
 
                 try {
                     Log.d(TAG, "onResponse: "+response);
@@ -116,6 +113,7 @@ public class BloodRequestDetailsFragment extends Fragment {
 
                     bloodProgress();
 
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -130,14 +128,6 @@ public class BloodRequestDetailsFragment extends Fragment {
 
     }
 
-    private void bloodProgress() {
-        binding.bloodProgress.getProgressDrawable().setColorFilter(
-                Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
-
-        binding.bloodProgress.setProgress(blood_managed);
-        binding.bloodProgress.setMax(Integer.parseInt(blood_need));
-        binding.bloodProgress.setScaleY(3f);
-    }
 
     private void totalManagedDonorCounter() {
 
@@ -148,18 +138,44 @@ public class BloodRequestDetailsFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
+                        Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@              Managed Response : " + response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            JSONArray jsonArray = jsonObject.getJSONArray("managed_donor");
+
+                            Log.d(TAG, "onResponse: @@@@@@@@@@         Managed Data : " + jsonArray);
+
+                            blood_managed = jsonArray.length();
+
+                            binding.tvBloodManaged.setText("Blood Managed " + blood_managed + " bag");
+
+                            Log.d(TAG, "onResponse: @@@@@@@@@@@@@@               Managed Length : " + blood_managed);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d(TAG, "onErrorResponse: @@@@@@@@@@@@@@@                  Error : " + error);
             }
         });
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+    }
+
+    private void bloodProgress() {
+        binding.bloodProgress.getProgressDrawable().setColorFilter(
+                Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+        
+        binding.bloodProgress.setProgress(blood_managed);
+        binding.bloodProgress.setMax(Integer.parseInt(blood_need));
+        binding.bloodProgress.setScaleY(3f);
     }
 
     private void interestedToDonate() {

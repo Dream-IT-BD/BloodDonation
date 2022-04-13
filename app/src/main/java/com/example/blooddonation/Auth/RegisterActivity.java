@@ -69,14 +69,14 @@ public class RegisterActivity extends AppCompatActivity {
         spinnerUpazila = findViewById(R.id.spinnerUpazila);
         spinnerConfig();
 
-        // EditText
-        etFullName = findViewById(R.id.etHospitalLocation);
-        etPhoneNumber = findViewById(R.id.etPhoneNumber);
-        etAddress = findViewById(R.id.etAddress);
-        etAgeForRegister = findViewById(R.id.etAgeForRegister);
-        etWeightForRegister = findViewById(R.id.etWeightForRegister);
-        etPasswordOneForRegister = findViewById(R.id.etPasswordOneForRegister);
-        etPasswordTwoForRegister = findViewById(R.id.etPasswordTwoForRegister);
+//        // EditText
+//        etFullName = findViewById(R.id.etHospitalLocation);
+//        etPhoneNumber = findViewById(R.id.etPhoneNumber);
+//        etAddress = findViewById(R.id.etAddress);
+//        etAgeForRegister = findViewById(R.id.etAgeForRegister);
+//        etWeightForRegister = findViewById(R.id.etWeightForRegister);
+//        etPasswordOneForRegister = findViewById(R.id.etPasswordOneForRegister);
+//        etPasswordTwoForRegister = findViewById(R.id.etPasswordTwoForRegister);
 
         customerSpinnerLayout = findViewById(R.id.customerSpinnerLayout);
 

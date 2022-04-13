@@ -22,7 +22,7 @@ public class LoadingDialog extends Dialog {
 
         getWindow().setAttributes(params);
         setTitle(null);
-        setCancelable(true);
+        setCancelable(false);
         setOnCancelListener(null);
 
         View view = LayoutInflater.from(context).inflate(R.layout.loading_dialog, null);
