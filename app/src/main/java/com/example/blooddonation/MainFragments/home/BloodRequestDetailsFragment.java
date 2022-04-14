@@ -37,7 +37,7 @@ public class BloodRequestDetailsFragment extends Fragment {
     Context mContext;
     String id;
     String blood_need;
-    int blood_managed;
+    int blood_managed = 0;
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
 
@@ -53,9 +53,8 @@ public class BloodRequestDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +64,8 @@ public class BloodRequestDetailsFragment extends Fragment {
         Log.d(TAG, "onCreate: fragment id pass ..."+id);
 
         fetchRequestDetails();
+
+        totalManagedDonorCounter();
 
         binding.donateNow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +90,6 @@ public class BloodRequestDetailsFragment extends Fragment {
             @Override
             public void onResponse(String response) {
 
-                totalManagedDonorCounter();
-
                 try {
                     Log.d(TAG, "onResponse: "+response);
                     JSONObject jsonObject = new JSONObject(response);
@@ -111,7 +110,7 @@ public class BloodRequestDetailsFragment extends Fragment {
 
                     binding.tvDate.setText(date);
 
-                    bloodProgress();
+
 
 
                 } catch (JSONException e) {
@@ -152,6 +151,8 @@ public class BloodRequestDetailsFragment extends Fragment {
 
                             Log.d(TAG, "onResponse: @@@@@@@@@@@@@@               Managed Length : " + blood_managed);
 
+                            bloodProgress();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -167,14 +168,19 @@ public class BloodRequestDetailsFragment extends Fragment {
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
+
+
     }
 
     private void bloodProgress() {
         binding.bloodProgress.getProgressDrawable().setColorFilter(
                 Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
-        
+
+        Toast.makeText(mContext, "Hello " + blood_managed, Toast.LENGTH_SHORT).show();
+
         binding.bloodProgress.setProgress(blood_managed);
-        binding.bloodProgress.setMax(Integer.parseInt(blood_need));
+//        binding.bloodProgress.setMax(Integer.parseInt(blood_need));
+        binding.bloodProgress.setMax(5);
         binding.bloodProgress.setScaleY(3f);
     }
 

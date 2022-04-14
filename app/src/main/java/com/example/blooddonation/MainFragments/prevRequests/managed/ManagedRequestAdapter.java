@@ -80,10 +80,9 @@ public class ManagedRequestAdapter extends RecyclerView.Adapter<ManagedRequestAd
 
     private void managedToCompletedStatusChanger() {
 
-
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        String url = "https://blood.dreamitdevlopment.com/public/api/donation/complete/"+ blood_request_id;
+        String url = "https://blood.dreamitdevlopment.com/public/api/donation/complete";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -130,7 +129,6 @@ public class ManagedRequestAdapter extends RecyclerView.Adapter<ManagedRequestAd
         queue.add(stringRequest);
     }
 
-
     @Override
     public int getItemCount() {
         return managedRequestItems.size();
@@ -142,8 +140,6 @@ public class ManagedRequestAdapter extends RecyclerView.Adapter<ManagedRequestAd
             super(binding.getRoot());
             this.binding = binding;
         }
-
-
     }
 
 }
