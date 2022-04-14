@@ -1,11 +1,14 @@
 package com.example.blooddonation.MainFragments.prevRequests.details_interested;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.ebanx.swipebtn.OnStateChangeListener;
+import com.ebanx.swipebtn.SwipeButton;
+import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentManaged;
+import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentStatusDetailsBinding;
 
 import org.json.JSONArray;
@@ -42,6 +49,9 @@ public class StatusDetailsFragment extends Fragment {
 
     private List<InterestedDonorItem> interestedDonorItems;
     private RecyclerView.Adapter interestedPeopleAdapter;
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    SwipeButton swipe_btn;
 
 
     @Override
@@ -74,10 +84,12 @@ public class StatusDetailsFragment extends Fragment {
         binding.interestedPeopleRecyclerView.setLayoutManager(manager);
         interestedPeopleAdapter = new InterestedDonorAdapter(interestedDonorItems, mContext, this);
         binding.interestedPeopleRecyclerView.setAdapter(interestedPeopleAdapter);
+
         binding.btnMarkAsManaged.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runningToManagedStatusChanger();
+                alertPopup();
+                //runningToManagedStatusChanger();
             }
         });
 
@@ -229,5 +241,39 @@ public class StatusDetailsFragment extends Fragment {
         });
 
         queue.add(stringRequest);
+    }
+
+    private void alertPopup(){
+
+        dialogBuilder = new AlertDialog.Builder(mContext);
+        final View windowView = getLayoutInflater().inflate(R.layout.running_to_managed_alert, null);
+
+        swipe_btn = windowView.findViewById(R.id.swipe_btn);
+
+        swipe_btn.setOnStateChangeListener(new OnStateChangeListener() {
+            @Override
+            public void onStateChange(boolean active) {
+
+                Toast.makeText(mContext, "Completed", Toast.LENGTH_SHORT).show();
+
+                runningToManagedStatusChanger();
+
+                dialog.hide();
+
+//                Fragment fragment = new FragmentManaged();
+//
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.RequestStatusDetails, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+
+            }
+        });
+
+        dialogBuilder.setView(windowView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
     }
 }
