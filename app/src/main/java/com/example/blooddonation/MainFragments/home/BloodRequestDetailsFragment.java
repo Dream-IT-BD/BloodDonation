@@ -147,7 +147,7 @@ public class BloodRequestDetailsFragment extends Fragment {
 
                             blood_managed = jsonArray.length();
 
-                            binding.tvBloodManaged.setText("Blood Managed " + blood_managed + " bag");
+                            binding.tvBloodManaged.setText("রক্ত পাওয়া গেছেঃ " + blood_managed + " ব্যাগ");
 
                             Log.d(TAG, "onResponse: @@@@@@@@@@@@@@               Managed Length : " + blood_managed);
 
@@ -176,7 +176,7 @@ public class BloodRequestDetailsFragment extends Fragment {
         binding.bloodProgress.getProgressDrawable().setColorFilter(
                 Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 
-        Toast.makeText(mContext, "Hello " + blood_managed, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mContext, "Hello " + blood_managed, Toast.LENGTH_SHORT).show();
 
         binding.bloodProgress.setProgress(blood_managed);
 //        binding.bloodProgress.setMax(Integer.parseInt(blood_need));

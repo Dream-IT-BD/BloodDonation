@@ -9,7 +9,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +48,7 @@ public class FragmentHome extends Fragment {
     FragHomeBinding binding;
     private List<BloodRequestItem> bloodRequestItems;
     private RecyclerView.Adapter bloodRequestAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -63,7 +66,23 @@ public class FragmentHome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragHomeBinding.inflate(inflater,container,false);
+
+        swipeRefreshLayout = binding.fragHomeXML;
         loadingDialog = new LoadingDialog(mContext);
+
+
+        binding.fragHomeXML.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                loadingDialog.show();
+                fetchBloodRequestData();
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
         loadingDialog.show();
 
         fetchBloodRequestData();

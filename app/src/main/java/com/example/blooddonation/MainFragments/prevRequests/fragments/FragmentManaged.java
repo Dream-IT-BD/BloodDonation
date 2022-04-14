@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,8 @@ public class FragmentManaged extends Fragment {
     LoadingDialog loadingDialog;
     private List<ManagedRequestItem> managedRequestItems;
     private RecyclerView.Adapter managedRequestAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -58,6 +61,19 @@ public class FragmentManaged extends Fragment {
         binding = FragmentManagedBinding.inflate(inflater, container, false);
         loadingDialog = new LoadingDialog(mContext);
         loadingDialog.show();
+
+        swipeRefreshLayout = binding.fragManagedBloodRequest;
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getManagedData();
+
+                loadingDialog.show();
+
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         getManagedData();
 
