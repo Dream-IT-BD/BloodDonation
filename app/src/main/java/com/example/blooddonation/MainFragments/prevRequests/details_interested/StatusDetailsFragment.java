@@ -84,7 +84,6 @@ public class StatusDetailsFragment extends Fragment {
 
         fetchRequestDetails();
 
-
         // Interested People
 
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
@@ -101,8 +100,6 @@ public class StatusDetailsFragment extends Fragment {
         });
 
         getInterestedDonorData();
-
-
 
         return binding.getRoot();
     }
@@ -203,8 +200,6 @@ public class StatusDetailsFragment extends Fragment {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
 
-        //String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/user-view/"+id+"?token="+token;
-
         String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -230,7 +225,6 @@ public class StatusDetailsFragment extends Fragment {
                                 interestedDonorItems.add(data);
 
                                 Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@@@@@@             Donor Data" + interestedDonorItems);
-
                             }
 
                             //Toast.makeText(mContext, "Interested : " + interestedDonorItems.toString(), Toast.LENGTH_SHORT).show();
@@ -239,7 +233,6 @@ public class StatusDetailsFragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -304,8 +297,6 @@ public class StatusDetailsFragment extends Fragment {
 
                     tvBloodManaged.setText("রক্ত পাওয়া গেছেঃ " + blood_managed + " ব্যাগ");
 
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -325,16 +316,6 @@ public class StatusDetailsFragment extends Fragment {
 
         totalManagedDonorCounter();
         totalBloodNeedCounter();
-
-
-//        int localBloodNeed = Integer.parseInt(blood_need);
-//        int localBloodManaged = blood_managed;
-//
-//        if (localBloodNeed > localBloodManaged){
-//            int math = localBloodNeed - localBloodManaged;
-//            Toast.makeText(mContext,  math + " Bag more", Toast.LENGTH_SHORT).show();
-//        }
-
 
         dialogBuilder = new AlertDialog.Builder(mContext);
         final View windowView = getLayoutInflater().inflate(R.layout.running_to_managed_alert, null);
