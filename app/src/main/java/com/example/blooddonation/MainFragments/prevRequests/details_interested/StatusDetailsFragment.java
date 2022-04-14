@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.ebanx.swipebtn.OnStateChangeListener;
 import com.ebanx.swipebtn.SwipeButton;
+import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentManaged;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentStatusDetailsBinding;
@@ -44,8 +47,12 @@ public class StatusDetailsFragment extends Fragment {
     private static final String TAG = "StatusDetailsFragment";
     Context mContext;
     String id;
+    int blood_managed;
+    String blood_need;
     FragmentStatusDetailsBinding binding;
     String token;
+    TextView tvBloodNeed, tvBloodManaged;
+    LoadingDialog loadingDialog;
 
     private List<InterestedDonorItem> interestedDonorItems;
     private RecyclerView.Adapter interestedPeopleAdapter;
@@ -65,15 +72,15 @@ public class StatusDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentStatusDetailsBinding.inflate(inflater, container, false);
 
+        loadingDialog = new LoadingDialog(mContext);
+        loadingDialog.show();
+
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
 
         interestedDonorItems = new ArrayList<>();
         id = getArguments().getString("id");
         Log.d(TAG, "onCreate: fragment id pass ..."+id);
-
-        String postID = id;
-
 
         fetchRequestDetails();
 
@@ -96,7 +103,47 @@ public class StatusDetailsFragment extends Fragment {
         getInterestedDonorData();
 
 
+
         return binding.getRoot();
+    }
+
+    private void fetchRequestDetails() {
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/view/"+id+"?token="+token;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadingDialog.hide();
+                try {
+                    Log.d(TAG, "onResponse: "+response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    binding.patientName.setText(jsonObject.getString("patient_name"));
+                    binding.hospitalName.setText(jsonObject.getString("hospital_name"));
+                    binding.bloodGroup.setText(jsonObject.getString("blood_group"));
+                    binding.gender.setText(jsonObject.getString("gender"));
+                    binding.division.setText(jsonObject.getString("division"));
+                    binding.district.setText(jsonObject.getString("district"));
+                    binding.upazila.setText(jsonObject.getString("upazila"));
+
+                    String dateFromAPI = jsonObject.getString("updated_at");
+
+                    String date = dateFromAPI.substring(0,10);
+
+                    binding.tvDate.setText(date);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse:    " + error);
+            }
+        }) ;
+        queue.add(stringRequest);
     }
 
     private void runningToManagedStatusChanger() {
@@ -146,45 +193,6 @@ public class StatusDetailsFragment extends Fragment {
                 return params;
             }
         };
-        queue.add(stringRequest);
-    }
-
-    private void fetchRequestDetails() {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-
-        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/view/"+id+"?token="+token;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                try {
-                    Log.d(TAG, "onResponse: "+response);
-                    JSONObject jsonObject = new JSONObject(response);
-                    binding.patientName.setText(jsonObject.getString("patient_name"));
-                    binding.hospitalName.setText(jsonObject.getString("hospital_name"));
-                    binding.bloodGroup.setText(jsonObject.getString("blood_group"));
-                    binding.gender.setText(jsonObject.getString("gender"));
-                    binding.division.setText(jsonObject.getString("division"));
-                    binding.district.setText(jsonObject.getString("district"));
-                    binding.upazila.setText(jsonObject.getString("upazila"));
-
-                    String dateFromAPI = jsonObject.getString("updated_at");
-
-                    String date = dateFromAPI.substring(0,10);
-
-                    binding.tvDate.setText(date);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse:    " + error);
-            }
-        }) ;
         queue.add(stringRequest);
     }
 
@@ -243,17 +251,101 @@ public class StatusDetailsFragment extends Fragment {
         queue.add(stringRequest);
     }
 
+    private void totalBloodNeedCounter() {
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/view/" + id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    blood_need = jsonObject.getString("blood_amount");
+                    tvBloodNeed.setText("রক্ত লাগবেঃ " + blood_need + " ব্যাগ");
+
+                    Log.d(TAG, "onResponse: @@@@@@@@@@@@@@            Blood need on popup : " + tvBloodNeed);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: @@@@@@@@@@@@@@@@                Error : " + error);
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    private void totalManagedDonorCounter() {
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/managed-donor/" + id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@              Managed Response : " + response);
+                loadingDialog.hide();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    JSONArray jsonArray = jsonObject.getJSONArray("managed_donor");
+
+                    Log.d(TAG, "onResponse: @@@@@@@@@@         Managed Data : " + jsonArray);
+
+                    blood_managed = jsonArray.length();
+
+                    tvBloodManaged.setText("রক্ত পাওয়া গেছেঃ " + blood_managed + " ব্যাগ");
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: @@@@@@@@@@@@@@@                  Error : " + error);
+            }
+        });
+        queue.add(stringRequest);
+    }
+
     private void alertPopup(){
+        loadingDialog.show();
+
+        totalManagedDonorCounter();
+        totalBloodNeedCounter();
+
+
+//        int localBloodNeed = Integer.parseInt(blood_need);
+//        int localBloodManaged = blood_managed;
+//
+//        if (localBloodNeed > localBloodManaged){
+//            int math = localBloodNeed - localBloodManaged;
+//            Toast.makeText(mContext,  math + " Bag more", Toast.LENGTH_SHORT).show();
+//        }
+
 
         dialogBuilder = new AlertDialog.Builder(mContext);
         final View windowView = getLayoutInflater().inflate(R.layout.running_to_managed_alert, null);
 
         swipe_btn = windowView.findViewById(R.id.swipe_btn);
+        tvBloodNeed = windowView.findViewById(R.id.tvBloodNeed);
+        tvBloodManaged = windowView.findViewById(R.id.tvBloodManaged);
 
         swipe_btn.setOnStateChangeListener(new OnStateChangeListener() {
             @Override
             public void onStateChange(boolean active) {
-
                 Toast.makeText(mContext, "Completed", Toast.LENGTH_SHORT).show();
 
                 runningToManagedStatusChanger();
