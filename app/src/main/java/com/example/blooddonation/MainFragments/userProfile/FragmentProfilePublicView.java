@@ -61,7 +61,7 @@ public class FragmentProfilePublicView extends Fragment {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token","");
 
-        id = getArguments().getString("id");
+        id = getArguments().getString("User_ID");
         Log.d(TAG, "onCreateView: @@@@@@@@@@@@@                    Post ID : " + id);
 
 

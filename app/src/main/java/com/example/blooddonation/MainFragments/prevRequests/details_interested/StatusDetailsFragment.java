@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,9 +32,11 @@ import com.android.volley.toolbox.Volley;
 import com.ebanx.swipebtn.OnStateChangeListener;
 import com.ebanx.swipebtn.SwipeButton;
 import com.example.blooddonation.LoadingDialog;
+import com.example.blooddonation.MainFragments.prevRequests.InterestedAndManagedAdapter;
 import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentManaged;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentStatusDetailsBinding;
+import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,13 +54,20 @@ public class StatusDetailsFragment extends Fragment {
     String id;
     int blood_managed;
     String blood_need;
-    FragmentStatusDetailsBinding binding;
+    //FragmentStatusDetailsBinding binding;
     String token;
     TextView tvBloodNeed, tvBloodManaged;
     LoadingDialog loadingDialog;
 
+    TextView patientName, hospitalName, bloodGroup, gender, division, district, upazila, tvDate;
+
+
     private List<InterestedDonorItem> interestedDonorItems;
     private RecyclerView.Adapter interestedPeopleAdapter;
+    TabLayout tabLayout;
+    ViewPager2 viewPager;
+    InterestedAndManagedAdapter adapter;
+
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     SwipeButton swipe_btn;
@@ -72,7 +82,21 @@ public class StatusDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentStatusDetailsBinding.inflate(inflater, container, false);
+        //binding = FragmentStatusDetailsBinding.inflate(inflater, container, false);
+        View view = inflater.inflate(R.layout.fragment_status_details, container, false);
+
+        tabLayout = view.findViewById(R.id.tabLayout);
+        viewPager = view.findViewById(R.id.viewPager);
+
+        patientName = view.findViewById(R.id.patient_name);
+        hospitalName = view.findViewById(R.id.hospital_name);
+        bloodGroup = view.findViewById(R.id.blood_group);
+        gender = view.findViewById(R.id.gender);
+        division = view.findViewById(R.id.division);
+        district = view.findViewById(R.id.district);
+        upazila = view.findViewById(R.id.upazila);
+        tvDate = view.findViewById(R.id.tvDate);
+
 
         loadingDialog = new LoadingDialog(mContext);
         loadingDialog.show();
@@ -81,29 +105,74 @@ public class StatusDetailsFragment extends Fragment {
         String token = sharedPreferences.getString("token", "");
 
         interestedDonorItems = new ArrayList<>();
+        //Get ID From 'RunningRequestAdapter'
         id = getArguments().getString("id");
-        Log.d(TAG, "onCreate: fragment id pass ..."+id);
+        Log.d(TAG, "onCreate:@@@@@@@@@@@@@@@@@@@@  StatusDetailsFragment Get ID : "+id);
+
+
+        // Send ID to FragmentInterestedDonor
+        Fragment fragmentInterestedDonor = new FragmentInterestedDonor();
+        Bundle arguments = new Bundle();
+        arguments.putString("id",getArguments().getString("id"));
+        fragmentInterestedDonor.setArguments(arguments);
+
+
+
+
+        // TabLayout Fragment Handle
+
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        adapter = new InterestedAndManagedAdapter(fragmentManager, getLifecycle());
+        viewPager.setAdapter(adapter);
+
+        tabLayout.addTab(tabLayout.newTab().setText("Interested"));
+        tabLayout.addTab(tabLayout.newTab().setText("Managed"));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                tabLayout.selectTab(tabLayout.getTabAt(position));
+            }
+        });
+
 
         fetchRequestDetails();
 
         // Interested People
 
-        LinearLayoutManager manager = new LinearLayoutManager(mContext);
-        binding.interestedPeopleRecyclerView.setLayoutManager(manager);
-        interestedPeopleAdapter = new InterestedDonorAdapter(interestedDonorItems, mContext, this);
-        binding.interestedPeopleRecyclerView.setAdapter(interestedPeopleAdapter);
+//        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+//        binding.interestedPeopleRecyclerView.setLayoutManager(manager);
+//        interestedPeopleAdapter = new InterestedDonorAdapter(interestedDonorItems, mContext, this);
+//        binding.interestedPeopleRecyclerView.setAdapter(interestedPeopleAdapter);
 
-        binding.btnMarkAsManaged.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertPopup();
-                //runningToManagedStatusChanger();
-            }
-        });
+//        btnMarkAsManaged.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                alertPopup();
+//                //runningToManagedStatusChanger();
+//            }
+//        });
 
-        getInterestedDonorData();
+//        getInterestedDonorData();
 
-        return binding.getRoot();
+        return view;
     }
 
     private void fetchRequestDetails() {
@@ -118,19 +187,19 @@ public class StatusDetailsFragment extends Fragment {
                 try {
                     Log.d(TAG, "onResponse: "+response);
                     JSONObject jsonObject = new JSONObject(response);
-                    binding.patientName.setText(jsonObject.getString("patient_name"));
-                    binding.hospitalName.setText(jsonObject.getString("hospital_name"));
-                    binding.bloodGroup.setText(jsonObject.getString("blood_group"));
-                    binding.gender.setText(jsonObject.getString("gender"));
-                    binding.division.setText(jsonObject.getString("division"));
-                    binding.district.setText(jsonObject.getString("district"));
-                    binding.upazila.setText(jsonObject.getString("upazila"));
+                    patientName.setText(jsonObject.getString("patient_name"));
+                    hospitalName.setText(jsonObject.getString("hospital_name"));
+                    bloodGroup.setText(jsonObject.getString("blood_group"));
+                    gender.setText(jsonObject.getString("gender"));
+                    division.setText(jsonObject.getString("division"));
+                    district.setText(jsonObject.getString("district"));
+                    upazila.setText(jsonObject.getString("upazila"));
 
                     String dateFromAPI = jsonObject.getString("updated_at");
 
                     String date = dateFromAPI.substring(0,10);
 
-                    binding.tvDate.setText(date);
+                    tvDate.setText(date);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -195,56 +264,56 @@ public class StatusDetailsFragment extends Fragment {
         queue.add(stringRequest);
     }
 
-    private void getInterestedDonorData() {
-
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
-
-        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            interestedDonorItems.clear();
-                            JSONObject jsonObject = new JSONObject(response);
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("interested_donor");
-
-                            for (int i = 0; i < jsonArray.length(); i++){
-                                JSONObject object = jsonArray.getJSONObject(i);
-
-                                JSONObject object1 = object.getJSONObject("user");
-
-                                InterestedDonorItem data = new InterestedDonorItem(
-                                        object1.getString("name"),
-                                        object.getString("blood_request_id"),
-                                        object.getString("user_id"));
-
-                                interestedDonorItems.add(data);
-
-                                Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@@@@@@             Donor Data" + interestedDonorItems);
-                            }
-
-                            //Toast.makeText(mContext, "Interested : " + interestedDonorItems.toString(), Toast.LENGTH_SHORT).show();
-
-                            interestedPeopleAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: @@@@@@@@@@@@@@@@@@     Volly Error : " + error);
-            }
-        });
-
-        queue.add(stringRequest);
-    }
+//    private void getInterestedDonorData() {
+//
+//        RequestQueue queue = Volley.newRequestQueue(mContext);
+//
+//        SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
+//        String token = sharedPreferences.getString("token", "");
+//
+//        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id;
+//
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//
+//                        try {
+//                            interestedDonorItems.clear();
+//                            JSONObject jsonObject = new JSONObject(response);
+//
+//                            JSONArray jsonArray = jsonObject.getJSONArray("interested_donor");
+//
+//                            for (int i = 0; i < jsonArray.length(); i++){
+//                                JSONObject object = jsonArray.getJSONObject(i);
+//
+//                                JSONObject object1 = object.getJSONObject("user");
+//
+//                                InterestedDonorItem data = new InterestedDonorItem(
+//                                        object1.getString("name"),
+//                                        object.getString("blood_request_id"),
+//                                        object.getString("user_id"));
+//
+//                                interestedDonorItems.add(data);
+//
+//                                Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@@@@@@             Donor Data" + interestedDonorItems);
+//                            }
+//
+//                            //Toast.makeText(mContext, "Interested : " + interestedDonorItems.toString(), Toast.LENGTH_SHORT).show();
+//
+//                            interestedPeopleAdapter.notifyDataSetChanged();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d(TAG, "onErrorResponse: @@@@@@@@@@@@@@@@@@     Volly Error : " + error);
+//            }
+//        });
+//
+//        queue.add(stringRequest);
+//    }
 
     private void totalBloodNeedCounter() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
@@ -333,6 +402,7 @@ public class StatusDetailsFragment extends Fragment {
 
                 //runningToManagedStatusChanger();
 
+                Toast.makeText(mContext, "POST API is Commented", Toast.LENGTH_LONG).show();
                 dialog.hide();
 
 //                Fragment fragment = new FragmentManaged();
@@ -353,3 +423,28 @@ public class StatusDetailsFragment extends Fragment {
 
     }
 }
+
+// Previous Interested Donor
+/*
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/interested_people_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
+ */

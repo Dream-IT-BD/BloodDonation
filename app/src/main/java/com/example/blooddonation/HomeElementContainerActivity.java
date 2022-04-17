@@ -25,7 +25,6 @@ public class HomeElementContainerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         intentFlag = intent.getStringExtra("frag");
 
-
         if (intentFlag.equals("viewBloodRequest")){
             fragmentTransection(new FragmentHome());
 

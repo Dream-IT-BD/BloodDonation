@@ -27,9 +27,9 @@ public class InterestedDonorAdapter extends RecyclerView.Adapter<InterestedDonor
 
     private final List<InterestedDonorItem> interestedDonorItems;
     private final Context context;
-    private final StatusDetailsFragment parent;
+    private final FragmentInterestedDonor parent;
 
-    public InterestedDonorAdapter(List<InterestedDonorItem> interestedDonorItems, Context context, StatusDetailsFragment parent) {
+    public InterestedDonorAdapter(List<InterestedDonorItem> interestedDonorItems, Context context, FragmentInterestedDonor parent) {
         this.interestedDonorItems = interestedDonorItems;
         this.context = context;
         this.parent = parent;
@@ -53,17 +53,16 @@ public class InterestedDonorAdapter extends RecyclerView.Adapter<InterestedDonor
 
         holder.binding.btnContactBloodDonor.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View v) {
                 Fragment fragment = new FragmentProfilePublicView();
                 Bundle arguments = new Bundle();
-                arguments.putString("id", data.getBlood_request_id());
+                arguments.putString("User_ID", data.getUser_id());
                 fragment.setArguments(arguments);
 
                 FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.dashboard_container, fragment).commit();
+//                fragmentTransaction.addToBackStack(null);
             }
         });
 

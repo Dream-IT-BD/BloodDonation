@@ -16,6 +16,4 @@
         android:layout_below="@id/tabLayout"
         android:id="@+id/viewPager"/>
 
-
-
 </RelativeLayout>
