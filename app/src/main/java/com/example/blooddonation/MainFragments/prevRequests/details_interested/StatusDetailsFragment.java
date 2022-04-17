@@ -3,6 +3,8 @@ package com.example.blooddonation.MainFragments.prevRequests.details_interested;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -329,7 +331,7 @@ public class StatusDetailsFragment extends Fragment {
             public void onStateChange(boolean active) {
                 Toast.makeText(mContext, "Completed", Toast.LENGTH_SHORT).show();
 
-                runningToManagedStatusChanger();
+                //runningToManagedStatusChanger();
 
                 dialog.hide();
 
@@ -346,6 +348,7 @@ public class StatusDetailsFragment extends Fragment {
 
         dialogBuilder.setView(windowView);
         dialog = dialogBuilder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
     }

@@ -1,6 +1,7 @@
 package com.example.blooddonation.MainFragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.blooddonation.HomeElementContainerActivity;
 import com.example.blooddonation.MainFragments.home.FragmentHome;
 import com.example.blooddonation.MainFragments.prevRequests.fragRequests;
 import com.example.blooddonation.R;
@@ -46,11 +48,15 @@ public class FragmentDashboard extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Fragment fragment = new FragmentHome();
+                Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
+                intent.putExtra("frag", "viewBloodRequest");
+                startActivity(intent);
 
-                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+//                Fragment fragment = new FragmentHome();
+//
+//                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.container, fragment).commit();
+//                fragmentTransaction.addToBackStack(null);
 
             }
         });
@@ -58,21 +64,30 @@ public class FragmentDashboard extends Fragment {
         binding.addBloodRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new FragmentFindBloodDonor();
 
-                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
+                intent.putExtra("frag", "addBloodRequest");
+                startActivity(intent);
+//                Fragment fragment = new FragmentFindBloodDonor();
+//
+//                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.container, fragment).commit();
+//                fragmentTransaction.addToBackStack(null);
             }
         });
         binding.viewPreviousRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new fragRequests();
 
-                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.container, fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
+                intent.putExtra("frag", "previousBloodRequest");
+                startActivity(intent);
+
+//                Fragment fragment = new fragRequests();
+//
+//                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.container, fragment).commit();
+//                fragmentTransaction.addToBackStack(null);
             }
         });
 

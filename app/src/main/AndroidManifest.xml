@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BloodDonation">
         <activity
+            android:name=".HomeElementContainerActivity"
+            android:exported="false" />
+        <activity
             android:name=".OnlineStatus.NoInternet"
             android:exported="false" />
         <activity
