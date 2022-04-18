@@ -6,10 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.blooddonation.MainFragments.prevRequests.InterestedAndManagedAdapter;
-import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentStatusAdapter;
-import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentInterestedDonorBinding;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +34,7 @@ public class FragmentInterestedDonor extends Fragment {
     private static final String TAG = "FragmentInterestedDonor";
     Context mContext;
     FragmentInterestedDonorBinding binding;
-    String id;
+    String bloodRequestID;
     private List<InterestedDonorItem> interestedDonorItems;
     private RecyclerView.Adapter interestedPeopleAdapter;
 
@@ -65,9 +59,12 @@ public class FragmentInterestedDonor extends Fragment {
         binding = FragmentInterestedDonorBinding.inflate(inflater, container,false);
 
         //Get ID From 'StatusDetailsFragment'
-//        id = getArguments().getString("id");
-        id = "18";
-        Log.d(TAG, "onCreate:@@@@@@@@@@@@@@@@@@@@  FragmentInterestedDonor Get ID : "+id);
+//        blood_Reuqest_ID = getArguments().getString("blood_Reuqest_ID");
+//        Log.d(TAG, "onCreate:@@@@@@@@@@@@@@@@@@@@  FragmentInterestedDonor Get ID : "+blood_Reuqest_ID);
+
+//        bloodRequestID = getArguments().getString("bloodRequestID");
+        bloodRequestID = "18";
+        Log.d(TAG, "onCreateView: @@@@@@@@@@@@               Blood Req ID : " + bloodRequestID);
 
         // Interested Donor Data
         interestedDonorItems = new ArrayList<>();
@@ -89,7 +86,7 @@ public class FragmentInterestedDonor extends Fragment {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
 
-        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id;
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+ bloodRequestID;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -113,7 +110,7 @@ public class FragmentInterestedDonor extends Fragment {
                         InterestedDonorItem data = new InterestedDonorItem(
                                 object1.getString("name"),
                                 object.getString("blood_request_id"),
-                                object.getString("user_id"));
+                                object.getString("user_id")); // 3
 
                         interestedDonorItems.add(data);
 

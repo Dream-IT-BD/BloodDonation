@@ -10,8 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -19,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +30,7 @@ import com.ebanx.swipebtn.OnStateChangeListener;
 import com.ebanx.swipebtn.SwipeButton;
 import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.MainFragments.prevRequests.InterestedAndManagedAdapter;
-import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentManaged;
 import com.example.blooddonation.R;
-import com.example.blooddonation.databinding.FragmentStatusDetailsBinding;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
@@ -113,9 +108,8 @@ public class StatusDetailsFragment extends Fragment {
         // Send ID to FragmentInterestedDonor
         Fragment fragmentInterestedDonor = new FragmentInterestedDonor();
         Bundle arguments = new Bundle();
-        arguments.putString("id",getArguments().getString("id"));
+        arguments.putString("idTwo",id);
         fragmentInterestedDonor.setArguments(arguments);
-
 
 
 
@@ -315,7 +309,7 @@ public class StatusDetailsFragment extends Fragment {
 //        queue.add(stringRequest);
 //    }
 
-    private void totalBloodNeedCounter() {
+    private void totalBloodNeedCounterForPopup() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/view/" + id;
 
@@ -347,7 +341,7 @@ public class StatusDetailsFragment extends Fragment {
         queue.add(stringRequest);
     }
 
-    private void totalManagedDonorCounter() {
+    private void totalManagedDonorCounterForPopup() {
 
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/managed-donor/" + id;
@@ -385,8 +379,8 @@ public class StatusDetailsFragment extends Fragment {
     private void alertPopup(){
         loadingDialog.show();
 
-        totalManagedDonorCounter();
-        totalBloodNeedCounter();
+        totalManagedDonorCounterForPopup();
+        totalBloodNeedCounterForPopup();
 
         dialogBuilder = new AlertDialog.Builder(mContext);
         final View windowView = getLayoutInflater().inflate(R.layout.running_to_managed_alert, null);

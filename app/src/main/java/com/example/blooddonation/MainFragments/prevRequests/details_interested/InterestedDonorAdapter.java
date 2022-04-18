@@ -58,11 +58,12 @@ public class InterestedDonorAdapter extends RecyclerView.Adapter<InterestedDonor
                 Fragment fragment = new FragmentProfilePublicView();
                 Bundle arguments = new Bundle();
                 arguments.putString("User_ID", data.getUser_id());
+                arguments.putString("blood_request_ID", data.getBlood_request_id());
                 fragment.setArguments(arguments);
 
                 FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.dashboard_container, fragment).commit();
-//                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack(null);
             }
         });
 
