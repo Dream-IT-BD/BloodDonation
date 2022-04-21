@@ -40,17 +40,11 @@ public class FragmentInterestedDonor extends Fragment {
 
     String userID;
 
-
-    public FragmentInterestedDonor() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mContext = context;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

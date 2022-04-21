@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +55,7 @@ public class StatusDetailsFragment extends Fragment {
     TextView tvBloodNeed, tvBloodManaged;
     LoadingDialog loadingDialog;
 
-    TextView patientName, hospitalName, bloodGroup, gender, division, district, upazila, tvDate;
+    TextView patientName, hospitalName, bloodGroup, gender, division, district, upazila, tvDate, btnMarkAsManaged;
 
 
     private List<InterestedDonorItem> interestedDonorItems;
@@ -91,6 +92,8 @@ public class StatusDetailsFragment extends Fragment {
         district = view.findViewById(R.id.district);
         upazila = view.findViewById(R.id.upazila);
         tvDate = view.findViewById(R.id.tvDate);
+
+        btnMarkAsManaged = view.findViewById(R.id.btnMarkAsManaged);
 
 
         loadingDialog = new LoadingDialog(mContext);
@@ -156,13 +159,14 @@ public class StatusDetailsFragment extends Fragment {
 //        interestedPeopleAdapter = new InterestedDonorAdapter(interestedDonorItems, mContext, this);
 //        binding.interestedPeopleRecyclerView.setAdapter(interestedPeopleAdapter);
 
-//        btnMarkAsManaged.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                alertPopup();
-//                //runningToManagedStatusChanger();
-//            }
-//        });
+
+        btnMarkAsManaged.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertPopup();
+                //runningToManagedStatusChanger();
+            }
+        });
 
 //        getInterestedDonorData();
 

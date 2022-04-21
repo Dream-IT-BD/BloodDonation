@@ -35,6 +35,12 @@
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/fragment_profile_public_view.xml" value="0.20729166666666668" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/layout_bg.xml" value="0.20729166666666668" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/request_added_popup.xml" value="0.20729166666666668" />
+        <entry key="app/src/main/res/layout/fragment_interested_donor.xml" value="0.1859375" />
+        <entry key="app/src/main/res/layout/fragment_managed.xml" value="0.1859375" />
+        <entry key="app/src/main/res/layout/fragment_managed_donor.xml" value="0.16530797101449277" />
+        <entry key="app/src/main/res/layout/fragment_status_details.xml" value="0.1859375" />
+        <entry key="app/src/main/res/layout/managed_people_vecycler_item.xml" value="0.17889492753623187" />
+        <entry key="app/src/main/res/layout/managed_request_recycler_item.xml" value="0.1585144927536232" />
       </map>
     </option>
   </component>
