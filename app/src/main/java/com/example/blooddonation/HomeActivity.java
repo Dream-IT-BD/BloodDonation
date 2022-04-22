@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import com.example.blooddonation.MainFragments.FragmentDashboard;
 import com.example.blooddonation.MainFragments.home.FragmentHome;
-import com.example.blooddonation.MainFragments.FragmentProfile;
+import com.example.blooddonation.MainFragments.UserProfile.FragmentProfile;
 import com.example.blooddonation.databinding.HomeActivityBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;

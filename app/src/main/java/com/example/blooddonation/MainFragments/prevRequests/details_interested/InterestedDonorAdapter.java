@@ -5,21 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.blooddonation.MainFragments.home.BloodRequestDetailsFragment;
-import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentRunning;
-import com.example.blooddonation.MainFragments.prevRequests.running.RunningRequestAdapter;
-import com.example.blooddonation.MainFragments.prevRequests.running.RunningRequestItem;
-import com.example.blooddonation.MainFragments.userProfile.FragmentProfilePublicView;
+import com.example.blooddonation.MainFragments.prevRequests.details_interested.userProfile.FragmentProfilePublicView;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.InterestedPeopleVecyclerItemBinding;
-import com.example.blooddonation.databinding.RequestRecyclerItemBinding;
 
 import java.util.List;
 

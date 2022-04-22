@@ -60,6 +60,7 @@ public class ManagedDonorAdapter extends RecyclerView.Adapter<ManagedDonorAdapte
 
     }
 
+
     @Override
     public int getItemCount() {
         return managedDonorItems.size();
@@ -72,4 +73,7 @@ public class ManagedDonorAdapter extends RecyclerView.Adapter<ManagedDonorAdapte
             this.binding = binding;
         }
     }
+
+
+
 }

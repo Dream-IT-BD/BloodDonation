@@ -82,7 +82,6 @@ public class FragmentHome extends Fragment {
             }
         });
 
-
         loadingDialog.show();
 
         fetchBloodRequestData();

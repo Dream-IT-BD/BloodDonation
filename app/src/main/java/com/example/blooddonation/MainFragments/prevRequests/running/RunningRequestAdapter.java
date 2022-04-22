@@ -60,8 +60,8 @@ public class RunningRequestAdapter extends RecyclerView.Adapter<RunningRequestAd
                 String postID = data.getId();
 
                 FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.dashboard_container, fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.dashboard_container, fragment).addToBackStack(null).commit();
+                //fragmentTransaction.addToBackStack(null);
 
 //                Fragment fragmentInterestedDonor = new FragmentInterestedDonor();
 //                Bundle arguments1 = new Bundle();

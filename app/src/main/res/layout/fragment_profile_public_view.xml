@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/user_public_profile"
-    tools:context=".MainFragments.userProfile.FragmentProfilePublicView">
+    tools:context=".MainFragments.prevRequests.details_interested.userProfile.FragmentProfilePublicView">
 
     <LinearLayout
         android:layout_width="match_parent"
