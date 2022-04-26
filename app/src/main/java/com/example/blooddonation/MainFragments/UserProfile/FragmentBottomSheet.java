@@ -1,6 +1,7 @@
 package com.example.blooddonation.MainFragments.UserProfile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,10 @@ public class FragmentBottomSheet extends BottomSheetDialogFragment {
         binding.layoutSupport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Support Clicked", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(mContext, SupportActivity.class));
+
+                //Toast.makeText(mContext, "Support Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 

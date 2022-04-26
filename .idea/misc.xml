@@ -36,6 +36,9 @@
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/layout_bg.xml" value="0.20729166666666668" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/request_added_popup.xml" value="0.20729166666666668" />
         <entry key="app/src/main/res/drawable/bottom_sheet_background.xml" value="0.15" />
+        <entry key="app/src/main/res/drawable/request_recycler_bg.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/shape_background.xml" value="0.1555" />
+        <entry key="app/src/main/res/layout/activity_support.xml" value="0.22" />
         <entry key="app/src/main/res/layout/bottom_sheet_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/fragment_interested_donor.xml" value="0.1859375" />

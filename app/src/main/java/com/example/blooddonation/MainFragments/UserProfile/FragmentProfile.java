@@ -76,49 +76,48 @@ public class FragmentProfile extends Fragment {
         return binding.getRoot();
     }
 
-    @SuppressLint("ResourceType")
-    private void bottomSheetLayout() {
-        final Dialog dialog = new Dialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.id.bottom_sheet_layout);
-
-        LinearLayout supportLayout = dialog.findViewById(R.id.layoutSupport);
-        LinearLayout shareLayout = dialog.findViewById(R.id.layoutShare);
-        LinearLayout contactLayout = dialog.findViewById(R.id.layoutContact);
-        LinearLayout logoutLayout = dialog.findViewById(R.id.layoutLogout);
-
-        supportLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "Support Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        shareLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "Share Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        contactLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "Contact Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        logoutLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "Logout Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
-    }
+//    private void bottomSheetLayout() {
+//        final Dialog dialog = new Dialog(mContext);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.id.bottom_sheet_layout);
+//
+//        LinearLayout supportLayout = dialog.findViewById(R.id.layoutSupport);
+//        LinearLayout shareLayout = dialog.findViewById(R.id.layoutShare);
+//        LinearLayout contactLayout = dialog.findViewById(R.id.layoutContact);
+//        LinearLayout logoutLayout = dialog.findViewById(R.id.layoutLogout);
+//
+//        supportLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(mContext, "Support Clicked", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        shareLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(mContext, "Share Clicked", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        contactLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(mContext, "Contact Clicked", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        logoutLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(mContext, "Logout Clicked", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//
+//        dialog.show();
+//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog.getWindow().setGravity(Gravity.BOTTOM);
+//    }
 }
