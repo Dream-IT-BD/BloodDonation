@@ -98,8 +98,8 @@ public class BloodRequestDetailsFragment extends Fragment {
                     binding.bloodGroup.setText(jsonObject.getString("blood_group"));
                     binding.gender.setText(jsonObject.getString("gender"));
                     binding.division.setText(jsonObject.getString("division"));
-                    binding.district.setText(jsonObject.getString("district"));
-                    binding.upazila.setText(jsonObject.getString("upazila"));
+                    binding.tvDistrict.setText(jsonObject.getString("district"));
+                    binding.tvUpazila.setText(jsonObject.getString("upazila"));
 
                     blood_need = jsonObject.getString("blood_amount");
                     binding.tvBloodNeed.setText("রক্ত প্রয়োজনঃ " + blood_need + " ব্যাগ");

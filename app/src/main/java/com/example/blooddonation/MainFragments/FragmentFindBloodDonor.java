@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,17 +20,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.blooddonation.MainFragments.home.FragmentHome;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentFindBloodDonorBinding;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
@@ -46,6 +42,7 @@ public class FragmentFindBloodDonor extends Fragment {
 
 
     private static final String TAG = "fragFindBloodDonor";
+
     FragmentFindBloodDonorBinding binding;
     Context mContext;
     AutoCompleteTextView spinnerBloodGroup, spinnerGender, spinnerDivision, spinnerDistrict, spinnerUpazila;
@@ -93,7 +90,7 @@ public class FragmentFindBloodDonor extends Fragment {
         spinnerDistrict = view.findViewById(R.id.spinnerDistrict);
         spinnerUpazila = view.findViewById(R.id.spinnerUpazila);
 
-        btnRegister = view.findViewById(R.id.btnRegister);
+        btnRegister = view.findViewById(R.id.btnEditConfirm);
 
         divisions = new ArrayList<String>();
         districts = new ArrayList<String>();
@@ -127,8 +124,6 @@ public class FragmentFindBloodDonor extends Fragment {
 
                 //emptyValidation();
                 bloodRequest();
-
-
             }
         });
 
@@ -155,6 +150,8 @@ public class FragmentFindBloodDonor extends Fragment {
                     if (status.equals("success")){
                         Toast.makeText(mContext, "Request Added", Toast.LENGTH_SHORT).show();
                         popupWindow();
+                    }else {
+                        Toast.makeText(mContext, "Try Again Letter", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -166,7 +163,6 @@ public class FragmentFindBloodDonor extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse:    @@@@@@@@@@@@@      Volly Error : " +error);
-                Toast.makeText(mContext, "Request Faild", Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

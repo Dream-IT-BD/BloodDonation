@@ -10,7 +10,6 @@
     tools:context=".MainFragments.home.FragmentHome">
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/blood_request_recycler"
         android:layout_width="match_parent"

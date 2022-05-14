@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,8 +88,8 @@ public class StatusDetailsFragment extends Fragment {
         bloodGroup = view.findViewById(R.id.blood_group);
         gender = view.findViewById(R.id.gender);
         division = view.findViewById(R.id.division);
-        district = view.findViewById(R.id.district);
-        upazila = view.findViewById(R.id.upazila);
+        district = view.findViewById(R.id.tvDistrict);
+        upazila = view.findViewById(R.id.tvUpazila);
         tvDate = view.findViewById(R.id.tvDate);
 
         btnMarkAsManaged = view.findViewById(R.id.btnMarkAsManaged);

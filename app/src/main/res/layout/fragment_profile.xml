@@ -15,11 +15,34 @@
         android:background="@drawable/profile_bg"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:weightSum="4"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"/>
+
+            <ImageView
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_edit"
+                android:clickable="true"/>
+
+
+        </LinearLayout>
+
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/profilepicture"
@@ -32,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="UserName"
+            android:text=" "
             android:textColor="@color/black"
             android:textSize="28sp"
             android:textStyle="bold|italic" />
@@ -44,7 +67,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/montserrat"
-            android:text="+8801234-567890"
+            android:text=" "
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="italic" />
@@ -78,7 +101,7 @@
                 android:text="বিভাগ" />
 
             <TextView
-                android:id="@+id/division"
+                android:id="@+id/tvDivision"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -110,7 +133,7 @@
                 android:text="জেলা" />
 
             <TextView
-                android:id="@+id/district"
+                android:id="@+id/tvDistrict"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -142,7 +165,7 @@
                 android:text="উপজেলা" />
 
             <TextView
-                android:id="@+id/upazila"
+                android:id="@+id/tvUpazila"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -198,6 +221,7 @@
 
 
         <TextView
+            android:id="@+id/tvUserLastDonation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
@@ -243,7 +267,7 @@
 
 
         <TextView
-            android:id="@+id/totalBloodDonate"
+            android:id="@+id/tvUserTotalDonation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
@@ -255,7 +279,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnLogout"
+        android:id="@+id/btnMore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -264,7 +288,7 @@
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/redBG"
         android:padding="10dp"
-        android:text="Logout"
+        android:text="More"
         android:textSize="24sp"/>
 
 

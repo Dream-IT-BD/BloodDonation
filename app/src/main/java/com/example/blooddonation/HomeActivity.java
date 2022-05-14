@@ -45,7 +45,6 @@ public class HomeActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new FragmentDashboard()).commit();
         //navigation.setCheckedItem(R.id.nav_home);
 

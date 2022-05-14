@@ -115,7 +115,9 @@ public class FragmentHome extends Fragment {
                     Log.d(TAG, "onResponse: Data..........."+response);
 
                     JSONArray array = new JSONArray(response);
+
                     bloodRequestItems.clear();
+
                     for (int i=0;i<array.length();i++){
 
                         JSONObject blooRequestData = array.getJSONObject(i);
@@ -146,48 +148,3 @@ public class FragmentHome extends Fragment {
     }
 
 }
-
-// FloatingAction Button Java
-        /*
-                btnFloatingButton = view.findViewById(R.id.btnFloatingButton);
-
-        btnFloatingButton.setVisibility(View.VISIBLE);
-
-        btnFloatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                fragFindBloodDonor findBloodDonor = new fragFindBloodDonor();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragHomeXML, findBloodDonor, "testTestTest")
-                        .addToBackStack(null)
-                        .commit();
-
-                btnFloatingButton.setVisibility(View.GONE);
-
-//                activity.navigationListner();
-
-//                navigation.setCheckedItem(R.id.findBloodDonorXML);
-            }
-        });
-         */
-
-// FloatingAction Button XML
-
-        /*
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btnFloatingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/redBG"
-        android:text="Blood Request"
-        android:textStyle="bold"
-        app:icon="@drawable/ic_blood"
-        app:layout_constraintVertical_bias="1"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-         */

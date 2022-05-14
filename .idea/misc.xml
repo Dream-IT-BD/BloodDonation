@@ -6,7 +6,10 @@
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/drawable/popup_bg.xml" value="0.145" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/drawable/shape_background.xml" value="0.145" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/drawable/shape_button.xml" value="0.145" />
+        <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/activity_edit_profile.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/activity_home_element_container.xml" value="0.20729166666666668" />
+        <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/activity_register.xml" value="0.11851851851851852" />
+        <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/activity_test.xml" value="0.19322916666666667" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/frag_home.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/frag_requests.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/fragment_blank.xml" value="0.20729166666666668" />
@@ -25,8 +28,10 @@
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/login_activity.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/managed_request_recycler_item.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/request_added_popup.xml" value="0.20729166666666668" />
+        <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/request_recycler_item.xml" value="0.22" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/running_request_recycler_item.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/running_to_managed_alert.xml" value="0.2" />
+        <entry key="..\:/Users/Jim/OneDrive/Documents/AndroidStudioProjects/BloodDonation/app/src/main/res/layout/splash_screen.xml" value="0.19722222222222222" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/drawable/popup_bg.xml" value="0.138" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/activity_register.xml" value="0.20729166666666668" />
         <entry key="..\:/bloodApp/BloodDonation/app/src/main/res/layout/frag_find_blood_donor.xml" value="0.20729166666666668" />

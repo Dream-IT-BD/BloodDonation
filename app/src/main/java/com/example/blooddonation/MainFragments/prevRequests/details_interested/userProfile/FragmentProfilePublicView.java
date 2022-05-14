@@ -171,8 +171,8 @@ public class FragmentProfilePublicView extends Fragment {
                             binding.tvUserNameForPublicProfile.setText(object1.getString("name"));
 
                             binding.division.setText(object1.getString("division"));
-                            binding.district.setText(object1.getString("district"));
-                            binding.upazila.setText(object1.getString("upazila"));
+                            binding.tvDistrict.setText(object1.getString("district"));
+                            binding.tvUpazila.setText(object1.getString("upazila"));
 
                             blood_request_id = object.getString("blood_request_id");
                             user_id = object.getString("user_id");

@@ -1,7 +1,5 @@
 package com.example.blooddonation.Auth;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -10,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -81,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
         customerSpinnerLayout = findViewById(R.id.customerSpinnerLayout);
 
         // Button
-        btnRegister = findViewById(R.id.btnRegister);
+        btnRegister = findViewById(R.id.btnEditConfirm);
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

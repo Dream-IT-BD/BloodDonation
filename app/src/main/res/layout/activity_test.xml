@@ -2,32 +2,32 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/findBloodDonorXML"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragments.FragmentFindBloodDonor">
-
+    tools:context=".MainFragments.UserProfile.ActivityTest">
 
     <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.496">
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:padding="15dp"
+                android:background="@color/redBG"
+                android:fontFamily="@font/arapey_italic"
+                android:text="App Name"
+                android:textColor="@color/black"
+                android:textSize="40dp"
+                android:textStyle="bold"/>
+
 
             <!--    Full Name -->
             <com.google.android.material.textfield.TextInputLayout
@@ -44,121 +44,11 @@
                 app:startIconDrawable="@drawable/ic_identity">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPatientName"
+                    android:id="@+id/etUserName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--    Patient Diagnosis -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="20dp"
-                android:backgroundTint="@color/redBG"
-                android:hint="রোগির সমস্যা"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-                app:startIconDrawable="@drawable/ic_identity">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPatientDiagnosis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--    Hospital Name -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/teInLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="20dp"
-                android:backgroundTint="@color/redBG"
-                android:hint="হাসপাতালের নাম"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                app:startIconDrawable="@drawable/ic_identity">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etHospitalName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--    Hospital Address -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/teInASLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="20dp"
-                android:backgroundTint="@color/redBG"
-                android:hint="হাসপাতালের ঠিকানা"
-                app:startIconDrawable="@drawable/ic_identity">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etHospitalAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--    Blood Group-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/customLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:hint="রক্তের গ্রুপ"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/customerSpinnerLayout"
-                app:startIconDrawable="@drawable/ic_blood">
-
-                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                    android:id="@+id/spinnerBloodGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:inputType="none"
-                    tools:ignore="KeyboardInaccessibleWidget,SpeakableTextPresentCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--    Blood Amount -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/teInDDLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="20dp"
-                android:backgroundTint="@color/redBG"
-                android:hint="রক্তের পরিমান (ব্যাগ)"
-                app:startIconDrawable="@drawable/ic_blood">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etBloodAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:text=" "
+                    android:inputType="text"
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -181,10 +71,58 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:focusable="false"
                     android:inputType="none"
+                    android:focusable="false"
                     tools:ignore="KeyboardInaccessibleWidget,SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!--    Blood Group-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/customLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:hint="রক্তের গ্রুপ"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customerSpinnerLayout"
+                app:startIconDrawable="@drawable/ic_blood">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/spinnerBloodGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:inputType="none"
+                    android:focusable="false"
+                    tools:ignore="KeyboardInaccessibleWidget,SpeakableTextPresentCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--    Phone Number-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cusmLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:hint="মোবাইল নাম্বার (Without +88)"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customLayout"
+                app:startIconDrawable="@drawable/ic_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:inputType="number"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <!--    Division-->
             <com.google.android.material.textfield.TextInputLayout
@@ -192,8 +130,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:hint="বিভাগ"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -207,8 +145,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:focusable="false"
                     android:inputType="none"
+                    android:focusable="false"
                     tools:ignore="KeyboardInaccessibleWidget,SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -218,8 +156,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:hint="জেলা"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -233,8 +171,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:focusable="false"
                     android:inputType="none"
+                    android:focusable="false"
                     tools:ignore="KeyboardInaccessibleWidget,SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -244,8 +182,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:hint="উপজেলা"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -259,31 +197,51 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:focusable="false"
                     android:inputType="none"
+                    android:focusable="false"
                     tools:ignore="KeyboardInaccessibleWidget,SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--    Additional Note -->
+
+            <!--    Email-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/teInACSLayout3"
+                android:id="@+id/cuosacagdut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="25dp"
                 android:layout_marginRight="20dp"
-                android:backgroundTint="@color/redBG"
-                android:hint="রক্তের প্রয়োজন সম্পর্কে বিস্তারিত"
-                app:startIconDrawable="@drawable/ic_identity">
+                android:hint="বয়স"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cuscayout"
+                app:startIconDrawable="@drawable/ic_age">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAdditionalNote"
+                    android:id="@+id/etAgeForRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text|textMultiLine"
-                    android:lines="4"
-                    android:maxLines="6"/>
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cugdut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:hint="ওজন"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cuscayout"
+                app:startIconDrawable="@drawable/ic_weight">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etWeightForRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--    Register Button-->
@@ -291,16 +249,17 @@
                 android:id="@+id/btnEditConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/redBG"
-                android:padding="10dp"
-                android:text="Register"
-                android:textColor="@color/black"
+                android:text="Confirm"
                 android:textSize="18sp"
-                android:textStyle="bold|italic" />
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textStyle="bold|italic"
+                android:backgroundTint="@color/redBG" />
 
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

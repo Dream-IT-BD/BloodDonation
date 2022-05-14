@@ -128,17 +128,11 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
 
                     String token = jsonObject.getString("access_token");
-                    String name = jsonObject.getString("name");
-                    String number = jsonObject.getString("number");
 
                     Log.d(TAG, "onResponse:    Token  : " + token);
-                    Log.d(TAG, "onResponse:    Name   :   " + name);
-                    Log.d(TAG, "onResponse:    Number  :  " + number);
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("token", token);
-                    editor.putString("name", name);
-                    editor.putString("number", number);
                     editor.apply();
 
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);

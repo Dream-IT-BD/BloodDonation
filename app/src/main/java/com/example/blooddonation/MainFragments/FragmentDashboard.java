@@ -47,17 +47,9 @@ public class FragmentDashboard extends Fragment {
         binding.viewBloodRequests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
                 intent.putExtra("frag", "viewBloodRequest");
                 startActivity(intent);
-
-//                Fragment fragment = new FragmentHome();
-//
-//                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-//                fragmentTransaction.replace(R.id.container, fragment).commit();
-//                fragmentTransaction.addToBackStack(null);
-
             }
         });
 
@@ -68,11 +60,6 @@ public class FragmentDashboard extends Fragment {
                 Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
                 intent.putExtra("frag", "addBloodRequest");
                 startActivity(intent);
-//                Fragment fragment = new FragmentFindBloodDonor();
-//
-//                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-//                fragmentTransaction.replace(R.id.container, fragment).commit();
-//                fragmentTransaction.addToBackStack(null);
             }
         });
         binding.viewPreviousRequest.setOnClickListener(new View.OnClickListener() {
@@ -82,12 +69,6 @@ public class FragmentDashboard extends Fragment {
                 Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
                 intent.putExtra("frag", "previousBloodRequest");
                 startActivity(intent);
-
-//                Fragment fragment = new fragRequests();
-//
-//                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-//                fragmentTransaction.replace(R.id.container, fragment).commit();
-//                fragmentTransaction.addToBackStack(null);
             }
         });
 

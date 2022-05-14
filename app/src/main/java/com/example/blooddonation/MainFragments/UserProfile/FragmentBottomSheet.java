@@ -2,6 +2,7 @@ package com.example.blooddonation.MainFragments.UserProfile;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.blooddonation.Auth.LoginActivity;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentBottomSheetBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -48,7 +50,15 @@ public class FragmentBottomSheet extends BottomSheetDialogFragment {
         binding.layoutShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Share Clicked", Toast.LENGTH_SHORT).show();
+
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Donate Blood with Donate app";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Sohojei rokto din o proyojone rokto pan Donate app er sahajje.");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+                //Toast.makeText(mContext, "Share Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -62,7 +72,15 @@ public class FragmentBottomSheet extends BottomSheetDialogFragment {
         binding.layoutLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Logout Clicked", Toast.LENGTH_SHORT).show();
+
+                SharedPreferences accessToken = getContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editAccessToken = accessToken.edit();
+                editAccessToken.clear();
+                editAccessToken.apply();
+
+                startActivity(new Intent(getContext(), LoginActivity.class));
+
+                //Toast.makeText(mContext, "Logout Clicked", Toast.LENGTH_SHORT).show();
             }
         });
 

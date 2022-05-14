@@ -75,6 +75,7 @@ public class BloodRequestAdapter extends RecyclerView.Adapter<BloodRequestAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         RequestRecyclerItemBinding binding;
         public ViewHolder(@NonNull RequestRecyclerItemBinding binding) {
             super(binding.getRoot());
