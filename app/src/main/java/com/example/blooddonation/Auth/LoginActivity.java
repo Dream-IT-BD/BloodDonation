@@ -8,8 +8,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +29,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -36,9 +42,11 @@ import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.LoginActivityBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tvRegisterNow;
     Button btnLogin;
     LoadingDialog loadingDialog;
+    String token, userSelectedDateOfLastDonation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     JSONObject jsonObject = new JSONObject(response);
 
-                    String token = jsonObject.getString("access_token");
+                    token = jsonObject.getString("access_token");
 
                     Log.d(TAG, "onResponse:    Token  : " + token);
 
@@ -140,9 +149,9 @@ public class LoginActivity extends AppCompatActivity {
 
                     Toast.makeText(LoginActivity.this, "Login Done", Toast.LENGTH_SHORT).show();
 
+                    getUserPreviousBloodDonationData();
                     loadingDialog.hide();
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -166,6 +175,134 @@ public class LoginActivity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
                 params.put("number",phone);
                 params.put("password",pass);
+                return params;
+            }
+        };
+        queue.add(stringRequest);
+
+    }
+
+    private void getUserPreviousBloodDonationData() {
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        String url = "https://blood.dreamitdevlopment.com/public/api/personal-profile-view?token=" + token;
+        Log.d(TAG, "getUserPreviousBloodDonationData: @@@@@@@@@@@@@@@@             token : " + token);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                try {
+
+                    for (int i = 0; i< response.length(); i++){
+
+                        JSONObject profileObject = response.getJSONObject(i);
+
+                        String blood = profileObject.getString("blood_donation");
+                        //Log.d(TAG, "onResponse: @@@@@@@@@@           Blood : " + blood);
+
+                        if (blood.equals("null")){
+                            // I'll show the datePickerPopup
+                            datePickerPopup();
+                        }else {
+                            // I'll navigate to the next activity
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            finish();
+
+                            //Log.d(TAG, "onResponse: @@@@@@@@@@@           Record : " + blood);
+                        }
+
+
+                        Log.d(VolleyLog.TAG, "onResponse: @@@@@@@@@@           My Object : " + profileObject);
+                        //Log.d(TAG, "onResponse: @@@@@@@@@@           Blood Donation : " + donationDataObject);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        queue.add(jsonArrayRequest);
+    }
+
+    private void datePickerPopup() {
+
+        Calendar calendar = Calendar.getInstance();
+
+        final int yearFrom = calendar.get(Calendar.YEAR);
+        final int monthFrom = calendar.get(Calendar.MONTH);
+        final int dayFrom = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(LoginActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                //String dateForDateFrom = dayOfMonth + "/" + month + "/" + year;
+                userSelectedDateOfLastDonation = year + "-" + month + "-" + dayOfMonth;
+
+                sendLastDonationDataWithDate();
+
+                Log.d(TAG, "onDateSet: @@@@@@@@@          Your Selected Date is : " + userSelectedDateOfLastDonation);
+            }
+        }, yearFrom,monthFrom,dayFrom);
+
+        datePickerDialog.setTitle("আপনার স্ররবশেষ রক্ত দানের তারিখ । \n");
+        datePickerDialog.setButton(DatePickerDialog.BUTTON_NEGATIVE, "SKIP", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(LoginActivity.this, "Skip", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onCancel: @@@@@@@@@@@@@@                You Pressed Skip");
+            }
+        });
+        datePickerDialog.setCanceledOnTouchOutside(false);
+        datePickerDialog.show();
+    }
+
+    private void sendLastDonationDataWithDate() {
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://blood.dreamitdevlopment.com/public/api/donation/check?token=" + token;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    String requestStatus = jsonObject.getString("status");
+
+                    if (requestStatus.equals("success")){
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams(){
+                String date = userSelectedDateOfLastDonation;
+                Log.d(TAG, "getParams: ..........................." + date);
+                Map<String, String> params = new HashMap<>();
+                params.put("donation_date",date);
                 return params;
             }
         };
