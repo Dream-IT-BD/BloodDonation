@@ -5,8 +5,10 @@ import static com.android.volley.VolleyLog.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,13 +21,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.blooddonation.Auth.RegisterActivity;
+import com.example.blooddonation.HomeActivity;
 import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.R;
-import com.example.blooddonation.databinding.ActivityTestBinding;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,11 +36,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActivityTest extends AppCompatActivity {
+public class ActivityEditProfile extends AppCompatActivity {
 
-    ActivityTestBinding binding;
     String token;
     LoadingDialog loadingDialog;
+    TextInputEditText etFullName, etPhoneNumber, etAge, etWeight;
     AutoCompleteTextView spinnerGender, spinnerBloodGroup, spinnerDivision, spinnerDistrict, spinnerUpazila;
     private ArrayList<String> divisions ,districts ,upazilas;
     Button btnEditConfirm;
@@ -47,11 +48,16 @@ public class ActivityTest extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_edit_profile);
         loadingDialog = new LoadingDialog(getApplicationContext());
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
         getDivisionData();
+
+        etFullName = findViewById(R.id.etUserName);
+        etPhoneNumber = findViewById(R.id.etPhoneNumber);
+        etAge = findViewById(R.id.etAgeForRegister);
+        etWeight = findViewById(R.id.etWeightForRegister);
 
         btnEditConfirm = findViewById(R.id.btnEditConfirm);
         spinnerGender = findViewById(R.id.spinnerGender);
@@ -84,6 +90,7 @@ public class ActivityTest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setNewProfile();
+
             }
         });
 
@@ -107,7 +114,14 @@ public class ActivityTest extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), status, Toast.LENGTH_LONG).show();
 
                     if (status.equals("success")){
-                        Toast.makeText(ActivityTest.this, "Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityEditProfile.this, "Success", Toast.LENGTH_SHORT).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivity(new Intent(ActivityEditProfile.this, HomeActivity.class));
+                                finish();
+                            }
+                        }, 1200);
                     }else {
                         Log.d(TAG, "onResponse: @@@@@@@@@@@@@               Error !!!");
                     }
@@ -126,15 +140,15 @@ public class ActivityTest extends AppCompatActivity {
             protected Map<String, String> getParams(){
 
                 String name, number, blood_group, gender, age, weight, division, district, upazila;
-                name = binding.etUserName.getText().toString();
-                number = binding.etPhoneNumber.getText().toString();
-                blood_group = binding.spinnerBloodGroup.getText().toString();
-                gender = binding.spinnerGender.getText().toString();
-                age = binding.etAgeForRegister.getText().toString();
-                weight = binding.etWeightForRegister.getText().toString();
-                division = binding.spinnerDivision.getText().toString();
-                district = binding.spinnerDistrict.getText().toString();
-                upazila = binding.spinnerUpazila.getText().toString();
+                name = etFullName.getText().toString();
+                number = etPhoneNumber.getText().toString();
+                blood_group = spinnerBloodGroup.getText().toString();
+                gender = spinnerGender.getText().toString();
+                age = etAge.getText().toString();
+                weight = etWeight.getText().toString();
+                division = spinnerDivision.getText().toString();
+                district = spinnerDistrict.getText().toString();
+                upazila = spinnerUpazila.getText().toString();
 
                 Log.d(TAG, "getParams: ..........................." + name + "......" + number +  "......" + blood_group + "....." + gender + "......" + age + "....." +
                         weight + "....." + division + "....." + district + "....." + upazila);
@@ -176,7 +190,7 @@ public class ActivityTest extends AppCompatActivity {
                             }
 
                             /*for address select*/
-                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(ActivityTest.this, android.R.layout.simple_spinner_dropdown_item, divisions);
+                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(ActivityEditProfile.this, android.R.layout.simple_spinner_dropdown_item, divisions);
                             spinnerDivision.setAdapter(divisionAdapter);
 
                         } catch (JSONException e) {
@@ -196,7 +210,7 @@ public class ActivityTest extends AppCompatActivity {
         districts.clear();
         spinnerDistrict.setText(null);
 
-        RequestQueue queue = Volley.newRequestQueue(ActivityTest.this);
+        RequestQueue queue = Volley.newRequestQueue(ActivityEditProfile.this);
         String url = "https://blood.dreamitdevlopment.com/public/api/district?district_id=" + spinnerDivision.getText().toString();
 
 // Request a string response from the provided URL.
@@ -218,7 +232,7 @@ public class ActivityTest extends AppCompatActivity {
                             }
 
                             /*for address select*/
-                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(ActivityTest.this, android.R.layout.simple_spinner_dropdown_item, districts);
+                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(ActivityEditProfile.this, android.R.layout.simple_spinner_dropdown_item, districts);
                             spinnerDistrict.setAdapter(divisionAdapter);
 
                         } catch (JSONException e) {
@@ -239,7 +253,7 @@ public class ActivityTest extends AppCompatActivity {
         upazilas.clear();
         spinnerUpazila.setText(null);
 
-        RequestQueue queue = Volley.newRequestQueue(ActivityTest.this);
+        RequestQueue queue = Volley.newRequestQueue(ActivityEditProfile.this);
         String url = "https://blood.dreamitdevlopment.com/public/api/upazila?district_id=" + spinnerDistrict.getText().toString();
 
 // Request a string response from the provided URL.
@@ -261,7 +275,7 @@ public class ActivityTest extends AppCompatActivity {
                             }
 
                             /*for address select*/
-                            ArrayAdapter<String> upazilaAdapter = new ArrayAdapter<>(ActivityTest.this, android.R.layout.simple_spinner_dropdown_item, upazilas);
+                            ArrayAdapter<String> upazilaAdapter = new ArrayAdapter<>(ActivityEditProfile.this, android.R.layout.simple_spinner_dropdown_item, upazilas);
                             spinnerUpazila.setAdapter(upazilaAdapter);
 
                         } catch (JSONException e) {

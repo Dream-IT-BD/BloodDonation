@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BloodDonation">
         <activity
-            android:name=".MainFragments.UserProfile.ActivityTest"
+            android:name=".MainFragments.UserProfile.ActivityEditProfile"
             android:exported="false" />
         <activity
             android:name=".MainFragments.UserProfile.EditProfileActivity"
