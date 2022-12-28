@@ -34,6 +34,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/montserrat_bold"
             android:text="20.08.2022"
+            android:textSize="18sp"
             android:textAlignment="viewEnd"
             android:textColor="@color/pureRed" />
     </LinearLayout>
@@ -54,7 +55,7 @@
             android:fontFamily="@font/montserrat"
             android:text="Shahir Islam"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -93,7 +94,7 @@
             android:fontFamily="@font/montserrat"
             android:text="Mohammad Ali Hospital, Bogura"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -126,6 +127,7 @@
                 android:layout_marginStart="20dp"
                 android:fontFamily="@font/montserrat"
                 android:text="AB+"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -139,7 +141,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:text="Details" />
+            android:text="Details"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 

@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.blooddonation.HomeActivity;
@@ -52,6 +53,8 @@ public class ActivityEditProfile extends AppCompatActivity {
         loadingDialog = new LoadingDialog(getApplicationContext());
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token", "");
+        getProfileData();
+
         getDivisionData();
 
         etFullName = findViewById(R.id.etUserName);
@@ -90,11 +93,8 @@ public class ActivityEditProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setNewProfile();
-
             }
         });
-
-
     }
 
     private void setNewProfile() {
@@ -167,6 +167,53 @@ public class ActivityEditProfile extends AppCompatActivity {
             }
         };
         queue.add(stringRequest);
+    }
+
+    private void getProfileData() {
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "https://blood.dreamitdevlopment.com/public/api/personal-profile-view?token=" + token;
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                loadingDialog.hide();
+                //Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@@@               Full Response : " + response);
+
+                try {
+
+                    for (int i = 0; i< response.length(); i++){
+                        JSONObject profileObject = response.getJSONObject(i);
+                        //JSONObject donationDataObject = profileObject.getJSONObject("blood_donation");
+
+
+                        etFullName.setText(profileObject.getString("name"));
+                        etPhoneNumber.setText(profileObject.getString("number"));
+                        spinnerBloodGroup.setText(profileObject.getString("blood_group"));
+                        spinnerGender.setText(profileObject.getString("gender"));
+                        etAge.setText(profileObject.getString("age"));
+                        etWeight.setText(profileObject.getString("weight"));
+                        spinnerDivision.setText(profileObject.getString("division"));
+                        spinnerDistrict.setText(profileObject.getString("district"));
+                        spinnerUpazila.setText(profileObject.getString("upazila"));
+
+
+                        Log.d(TAG, "onResponse: @@@@@@@@@@           My Object : " + profileObject);
+                        //Log.d(TAG, "onResponse: @@@@@@@@@@           Blood Donation : " + donationDataObject);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        queue.add(jsonArrayRequest);
     }
 
     private void getDivisionData() {
