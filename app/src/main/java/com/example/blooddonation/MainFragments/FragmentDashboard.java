@@ -80,7 +80,6 @@ public class FragmentDashboard extends Fragment {
         binding.viewPreviousRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
                 intent.putExtra("frag", "previousBloodRequest");
                 startActivity(intent);

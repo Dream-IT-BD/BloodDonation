@@ -71,16 +71,4 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-
-    @Override
-    public void onBackPressed() {
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new FragmentHome()).commit();
-
-//        if (drawer.isDrawerOpen(GravityCompat.START)){
-//            drawer.closeDrawer(GravityCompat.START);
-//        }else{
-//            super.onBackPressed();
-//        }
-    }
 }

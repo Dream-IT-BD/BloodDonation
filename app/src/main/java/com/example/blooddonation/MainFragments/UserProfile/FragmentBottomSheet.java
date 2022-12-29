@@ -79,6 +79,7 @@ public class FragmentBottomSheet extends BottomSheetDialogFragment {
                 editAccessToken.apply();
 
                 startActivity(new Intent(getContext(), LoginActivity.class));
+                getActivity().finish(); // for finishing previous activity
 
                 //Toast.makeText(mContext, "Logout Clicked", Toast.LENGTH_SHORT).show();
             }

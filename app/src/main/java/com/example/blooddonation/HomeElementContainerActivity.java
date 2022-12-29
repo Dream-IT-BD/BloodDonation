@@ -11,7 +11,6 @@ import android.os.Bundle;
 import com.example.blooddonation.MainFragments.FragmentFindBloodDonor;
 import com.example.blooddonation.MainFragments.home.FragmentHome;
 import com.example.blooddonation.MainFragments.prevRequests.fragRequests;
-import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentManaged;
 
 public class HomeElementContainerActivity extends AppCompatActivity {
 
@@ -25,24 +24,23 @@ public class HomeElementContainerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         intentFlag = intent.getStringExtra("frag");
 
-        if (intentFlag.equals("viewBloodRequest")){
-            fragmentTransection(new FragmentHome());
-
-        }else if (intentFlag.equals("addBloodRequest")){
-            fragmentTransection(new FragmentFindBloodDonor());
-        }else {
-            fragmentTransection(new fragRequests());
+        if (intentFlag.equals("viewBloodRequest")) {
+            fragmentTransaction(new FragmentHome());
+        } else if (intentFlag.equals("addBloodRequest")) {
+            fragmentTransaction(new FragmentFindBloodDonor());
+        } else {
+            fragmentTransaction(new fragRequests());
         }
 
     }
 
-    public  void fragmentTransection(Fragment fragment){
+    public void fragmentTransaction(Fragment fragment) {
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.dashboard_container, fragment);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.dashboard_container, fragment);
 //                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+        fragmentTransaction.commit();
     }
 
 }
