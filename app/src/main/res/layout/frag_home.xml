@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/splashBG"
+    android:orientation="vertical"
     android:id="@+id/fragHomeXML"
     tools:context=".MainFragments.home.FragmentHome">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/blood_request_recycler"
+    <Spinner
+        android:id="@+id/upazilaSelectorSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/tvLoadingDataFor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textAlignment="textStart"
+        android:layout_marginStart="10dp"
+        android:textStyle="italic"/>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/splashBG"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/blood_request_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>
