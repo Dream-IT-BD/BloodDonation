@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.blooddonation.databinding.FragmentBloodRequestDetailsViewBinding;
 
 import com.android.volley.Request;
@@ -35,7 +34,8 @@ public class BloodRequestDetailsFragment extends Fragment {
 
     private static final String TAG = "Blood Request";
     Context mContext;
-    String id;
+    String id, logedin_user_ID, requestCreatorUserID;
+    SharedPreferences sharedPreferences;
     String blood_need;
     int blood_managed = 0;
     private int progressBarStatus = 0;
@@ -63,6 +63,9 @@ public class BloodRequestDetailsFragment extends Fragment {
         id = getArguments().getString("id");
         Log.d(TAG, "onCreate: fragment id pass ..."+id);
 
+        sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
+        logedin_user_ID = sharedPreferences.getString("user_ID","");
+
         fetchRequestDetails();
 
         totalManagedDonorCounter();
@@ -81,7 +84,7 @@ public class BloodRequestDetailsFragment extends Fragment {
     private void fetchRequestDetails() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
+        sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
 
         String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/view/"+id+"?token="+token;
@@ -101,6 +104,16 @@ public class BloodRequestDetailsFragment extends Fragment {
                     binding.tvDistrict.setText(jsonObject.getString("district"));
                     binding.tvUpazila.setText(jsonObject.getString("upazila"));
 
+                    requestCreatorUserID = jsonObject.getString("user_id");
+                    Log.d(TAG, "onResponse: @@@@@@@@@@@          Active User ID : " + logedin_user_ID);
+                    Log.d(TAG, "onResponse: @@@@@@@@@           Request Creator ID : " + requestCreatorUserID);
+
+                    if (logedin_user_ID.equals(requestCreatorUserID)){
+                        binding.donateNow.setVisibility(View.GONE);
+                        Log.d(TAG, "onResponse: @@@@@@@@@@@          Active User ID : " + logedin_user_ID);
+                        Log.d(TAG, "onResponse: @@@@@@@@@@@          Request Creator ID : " + requestCreatorUserID);
+                    }
+
                     blood_need = jsonObject.getString("blood_amount");
                     binding.tvBloodNeed.setText("রক্ত প্রয়োজনঃ " + blood_need + " ব্যাগ");
 
@@ -109,9 +122,6 @@ public class BloodRequestDetailsFragment extends Fragment {
                     String date = dateFromAPI.substring(0,10);
 
                     binding.tvDate.setText(date);
-
-
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();

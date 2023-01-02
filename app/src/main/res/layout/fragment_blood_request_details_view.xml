@@ -395,6 +395,7 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/dividor"
             android:layout_width="1dp"
             android:layout_height="50dp"
             android:background="@color/lightBlack" />

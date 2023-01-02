@@ -144,10 +144,16 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("token", token);
                     editor.apply();
 
+
+
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);
                     token = sharedPreferences.getString("token","");
 
+                    saveUserProfileData();
+
                     Toast.makeText(LoginActivity.this, "Login Done", Toast.LENGTH_SHORT).show();
+
+
 
                     getUserPreviousBloodDonationData();
                     loadingDialog.hide();
@@ -180,6 +186,54 @@ public class LoginActivity extends AppCompatActivity {
         };
         queue.add(stringRequest);
 
+    }
+
+    private void saveUserProfileData() {
+        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        String url = "https://blood.dreamitdevlopment.com/public/api/personal-profile-view?token=" + token;
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                loadingDialog.hide();
+                //Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@@@               Full Response : " + response);
+
+                try {
+
+                    for (int i = 0; i< response.length(); i++){
+                        JSONObject profileObject = response.getJSONObject(i);
+                        JSONObject blood_donationObject = profileObject.getJSONObject("blood_donation");
+
+                        String user_ID = blood_donationObject.getString("user_id");
+
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("user_profile", profileObject.toString());
+                        editor.putString("user_ID", user_ID);
+                        editor.apply();
+
+                        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("authToken", Context.MODE_PRIVATE);
+                        String user_profile = sharedPreferences.getString("user_profile","");
+                        String userIDForLOG = sharedPreferences.getString("user_ID","");
+                        Log.d(TAG, "onResponse: @@@@@@@@@@@@               User Profile on Login : " + user_profile);
+                        Log.d(TAG, "onResponse: @@@@@@@@@@@@               User ID on Login : " + userIDForLOG);
+
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        queue.add(jsonArrayRequest);
     }
 
     private void getUserPreviousBloodDonationData() {

@@ -34,6 +34,7 @@ public class FragmentProfile extends Fragment {
     Context mContext;
     String token;
     LoadingDialog loadingDialog;
+    String user_ID;
 
 
     public FragmentProfile() {
