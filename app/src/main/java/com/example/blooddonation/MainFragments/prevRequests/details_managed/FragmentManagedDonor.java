@@ -1,5 +1,7 @@
 package com.example.blooddonation.MainFragments.prevRequests.details_managed;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +61,8 @@ public class FragmentManagedDonor extends Fragment {
         // Managed Donor Data
         managedDonorItems = new ArrayList<>();
 
-        bloodRequestID = "18";
+        bloodRequestID = "1";
+        Log.d(TAG, "onCreateView: @@@@@@@@@@@@             Managed Hard Coded Blood Req ID : " + bloodRequestID);
 
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         binding.managedPeopleRecyclerView.setLayoutManager(manager);

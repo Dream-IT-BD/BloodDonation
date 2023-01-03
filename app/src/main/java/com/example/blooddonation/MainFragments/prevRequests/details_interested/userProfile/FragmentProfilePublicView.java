@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,7 +60,8 @@ public class FragmentProfilePublicView extends Fragment {
 
 
         user_id = getArguments().getString("User_ID");
-        blood_request_id = getArguments().getString("blood_request_ID");
+        //blood_request_id = getArguments().getString("blood_request_ID");
+        blood_request_id = "1";
         Log.d(TAG, "FargmentProfilePublicView: @@@@@@@@@@@@@              User ID : " + id);
 
 
@@ -220,6 +222,7 @@ public class FragmentProfilePublicView extends Fragment {
 
                     if (status.equals("success")){
                         Toast.makeText(mContext, "Donor Managed", Toast.LENGTH_SHORT).show();
+
                     }else {
                         Toast.makeText(mContext, "Something went wrong. Try Again Letter", Toast.LENGTH_SHORT).show();
                     }

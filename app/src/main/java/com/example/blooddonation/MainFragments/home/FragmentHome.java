@@ -138,6 +138,7 @@ public class FragmentHome extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.d(TAG, "onResponse: @@@@@@@@@@@@             All Blood Requests : " + response);
 
                 try {
 
@@ -146,6 +147,11 @@ public class FragmentHome extends Fragment {
                     Log.d(TAG, "onResponse: Data..........."+response);
 
                     JSONArray array = new JSONArray(response);
+
+                    if (array.length() == 0){
+                        Log.d(TAG, "onResponse: @@@@@@@@@@@@@               Array Response : No Request Found !");
+                        Toast.makeText(mContext, "No Request Found ! Please check back latter.", Toast.LENGTH_SHORT).show();
+                    }
 
                     bloodRequestItems.clear();
 

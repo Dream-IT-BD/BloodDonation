@@ -57,8 +57,8 @@ public class FragmentInterestedDonor extends Fragment {
 //        Log.d(TAG, "onCreate:@@@@@@@@@@@@@@@@@@@@  FragmentInterestedDonor Get ID : "+blood_Reuqest_ID);
 
 //        bloodRequestID = getArguments().getString("bloodRequestID");
-        bloodRequestID = "18";
-        Log.d(TAG, "onCreateView: @@@@@@@@@@@@               Blood Req ID : " + bloodRequestID);
+        bloodRequestID = "1";
+        Log.d(TAG, "onCreateView: @@@@@@@@@@@@             Interested Hard Coded Blood Req ID : " + bloodRequestID);
 
         // Interested Donor Data
         interestedDonorItems = new ArrayList<>();
