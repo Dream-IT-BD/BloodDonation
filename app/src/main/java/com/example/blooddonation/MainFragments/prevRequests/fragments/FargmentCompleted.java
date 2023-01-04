@@ -41,7 +41,6 @@ public class FargmentCompleted extends Fragment {
     private List<CompletedRequestItem> completedRequestItems;
     private RecyclerView.Adapter completedRequestAdapter;
     FargmentCompletedBinding binding;
-    LoadingDialog loadingDialog;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -53,8 +52,7 @@ public class FargmentCompleted extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FargmentCompletedBinding.inflate(inflater, container, false);
-        loadingDialog = new LoadingDialog(mContext);
-        loadingDialog.show();
+        binding.shimmer.startShimmer();
 
         getCompletedData();
         completedRequestItems = new ArrayList<>();
@@ -81,7 +79,9 @@ public class FargmentCompleted extends Fragment {
 
                 try {
 
-                    loadingDialog.hide();
+                    binding.shimmer.stopShimmer();
+                    binding.shimmer.setVisibility(View.GONE);
+                    binding.completedBloodRequestRecycler.setVisibility(View.VISIBLE);
 
                     Log.d(TAG, "onResponse: Data..........."+response);
 

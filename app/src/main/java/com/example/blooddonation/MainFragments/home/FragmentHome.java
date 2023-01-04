@@ -48,7 +48,6 @@ public class FragmentHome extends Fragment {
     private static final String TAG = "fragHome";
     Context mContext;
     String token;
-    LoadingDialog loadingDialog;
     private ArrayList<String> upazilas;
     String userSelectedUpazila;
 
@@ -75,10 +74,11 @@ public class FragmentHome extends Fragment {
         binding = FragHomeBinding.inflate(inflater,container,false);
 
         swipeRefreshLayout = binding.swipeRefreshLayout;
-        loadingDialog = new LoadingDialog(mContext);
         upazilas = new ArrayList<String>();
 
         getUpazilaData();
+
+        binding.shimmer.startShimmer();
 
 
 
@@ -88,7 +88,6 @@ public class FragmentHome extends Fragment {
                 userSelectedUpazila = upazilas.get(position);
                 Log.d(TAG, "onItemSelected: @@@@@@@@@@@              User Selected : " + userSelectedUpazila);
 
-                loadingDialog.show();
                 fetchBloodRequestData();
                 bloodRequestItems.clear();
                 binding.tvLoadingDataFor.setText("Loading blood requests for : " + userSelectedUpazila);
@@ -106,14 +105,12 @@ public class FragmentHome extends Fragment {
             @Override
             public void onRefresh() {
 
-                loadingDialog.show();
                 fetchBloodRequestData();
 
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
 
-        loadingDialog.show();
 
         fetchBloodRequestData();
         bloodRequestItems = new ArrayList<>();
@@ -142,7 +139,9 @@ public class FragmentHome extends Fragment {
 
                 try {
 
-                    loadingDialog.hide();
+                    binding.shimmer.stopShimmer();
+                    binding.shimmer.setVisibility(View.GONE);
+                    binding.swipeRefreshLayout.setVisibility(View.VISIBLE);
 
                     Log.d(TAG, "onResponse: Data..........."+response);
 

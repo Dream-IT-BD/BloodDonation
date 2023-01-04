@@ -32,7 +32,7 @@
     <color name="CDC">#CDDC39</color>
     <color name="CDCTwo">#07000000</color>
     <color name="primaryHigh">#FF866D</color>
-<!--    <color name=""></color>-->
+    <color name="shimmer_color">#DDDDDD</color>
 <!--    <color name=""></color>-->
 <!--    <color name=""></color>-->
 <!--    <color name=""></color>-->

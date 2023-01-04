@@ -41,7 +41,6 @@ public class FragmentRunning extends Fragment {
     private static final String TAG = "FragmentRunning";
     Context mContext;
     FragmentRunningBinding binding;
-    LoadingDialog loadingDialog;
 
     private List<RunningRequestItem> runningRequestItems;
     private RecyclerView.Adapter runningRequestAdapter;
@@ -61,21 +60,16 @@ public class FragmentRunning extends Fragment {
 
         binding = FragmentRunningBinding.inflate(inflater, container, false);
         swipeRefreshLayout = binding.fragRunningBloodRequests;
-        loadingDialog = new LoadingDialog(mContext);
+        binding.shimmer.startShimmer();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadingDialog.show();
-
                 getRunningData();
 
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
-
-
-        loadingDialog.show();
 
         getRunningData();
         runningRequestItems = new ArrayList<>();
@@ -84,7 +78,6 @@ public class FragmentRunning extends Fragment {
         binding.runningBloodRequestRecycler.setLayoutManager(manager);
         runningRequestAdapter = new RunningRequestAdapter(runningRequestItems, mContext, this);
         binding.runningBloodRequestRecycler.setAdapter(runningRequestAdapter);
-
 
         return binding.getRoot();
     }
@@ -103,7 +96,9 @@ public class FragmentRunning extends Fragment {
 
                 try {
 
-                    loadingDialog.hide();
+                    binding.shimmer.stopShimmer();
+                    binding.shimmer.setVisibility(View.GONE);
+                    binding.fragRunningBloodRequests.setVisibility(View.VISIBLE);
 
                     runningRequestItems.clear();
                     JSONArray array = new JSONArray(response);

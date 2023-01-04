@@ -42,7 +42,6 @@ public class FragmentManaged extends Fragment {
     FragmentManagedBinding binding;
     Context mContext;
     String token;
-    LoadingDialog loadingDialog;
     private List<ManagedRequestItem> managedRequestItems;
     private RecyclerView.Adapter managedRequestAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -59,8 +58,7 @@ public class FragmentManaged extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentManagedBinding.inflate(inflater, container, false);
-        loadingDialog = new LoadingDialog(mContext);
-        loadingDialog.show();
+        binding.shimmer.startShimmer();
 
         swipeRefreshLayout = binding.fragManagedBloodRequest;
 
@@ -69,7 +67,6 @@ public class FragmentManaged extends Fragment {
             public void onRefresh() {
                 getManagedData();
 
-                loadingDialog.show();
 
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -101,7 +98,9 @@ public class FragmentManaged extends Fragment {
 
                 try {
 
-                    loadingDialog.hide();
+                    binding.shimmer.stopShimmer();
+                    binding.shimmer.setVisibility(View.GONE);
+                    binding.fragManagedBloodRequest.setVisibility(View.VISIBLE);
 
                     Log.d(TAG, "onResponse: Data..........."+response);
 

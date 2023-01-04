@@ -33,7 +33,6 @@ public class FragmentProfile extends Fragment {
     FragmentProfileBinding binding;
     Context mContext;
     String token;
-    LoadingDialog loadingDialog;
     String user_ID;
 
 
@@ -52,8 +51,6 @@ public class FragmentProfile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false);
-        loadingDialog = new LoadingDialog(mContext);
-        loadingDialog.show();
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         token = sharedPreferences.getString("token","");
@@ -92,7 +89,6 @@ public class FragmentProfile extends Fragment {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                loadingDialog.hide();
                 //Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@@@               Full Response : " + response);
 
                 try {
