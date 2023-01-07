@@ -20,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.MainFragments.prevRequests.importantData;
 import com.example.blooddonation.databinding.FragmentInterestedDonorBinding;
 
 import org.json.JSONArray;
@@ -57,7 +58,9 @@ public class FragmentInterestedDonor extends Fragment {
 //        Log.d(TAG, "onCreate:@@@@@@@@@@@@@@@@@@@@  FragmentInterestedDonor Get ID : "+blood_Reuqest_ID);
 
 //        bloodRequestID = getArguments().getString("bloodRequestID");
-        bloodRequestID = "1";
+
+         bloodRequestID = importantData.BLOOD_REQUEST_ID;
+
         Log.d(TAG, "onCreateView: @@@@@@@@@@@@             Interested Hard Coded Blood Req ID : " + bloodRequestID);
 
         // Interested Donor Data

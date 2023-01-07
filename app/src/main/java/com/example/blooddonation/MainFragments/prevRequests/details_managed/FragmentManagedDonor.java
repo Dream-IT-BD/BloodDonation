@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.blooddonation.MainFragments.prevRequests.details_interested.InterestedDonorAdapter;
 import com.example.blooddonation.MainFragments.prevRequests.details_interested.InterestedDonorItem;
+import com.example.blooddonation.MainFragments.prevRequests.importantData;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentManagedBinding;
 import com.example.blooddonation.databinding.FragmentManagedDonorBinding;
@@ -61,15 +62,13 @@ public class FragmentManagedDonor extends Fragment {
         // Managed Donor Data
         managedDonorItems = new ArrayList<>();
 
-        bloodRequestID = "1";
+        bloodRequestID = importantData.BLOOD_REQUEST_ID;;
         Log.d(TAG, "onCreateView: @@@@@@@@@@@@             Managed Hard Coded Blood Req ID : " + bloodRequestID);
 
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         binding.managedPeopleRecyclerView.setLayoutManager(manager);
         managedDonorAdapter = new ManagedDonorAdapter(managedDonorItems, mContext, this);
         binding.managedPeopleRecyclerView.setAdapter(managedDonorAdapter);
-
-
 
         getManagedDonorData();
 

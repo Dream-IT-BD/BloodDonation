@@ -96,7 +96,7 @@ public class StatusDetailsFragment extends Fragment {
 
 
         loadingDialog = new LoadingDialog(mContext);
-        loadingDialog.show();
+
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
@@ -149,7 +149,7 @@ public class StatusDetailsFragment extends Fragment {
         });
 
 
-        fetchRequestDetails();
+
 
         // Interested People
 
@@ -168,11 +168,13 @@ public class StatusDetailsFragment extends Fragment {
         });
 
 //        getInterestedDonorData();
+        fetchRequestDetails();
 
         return view;
     }
 
     private void fetchRequestDetails() {
+        loadingDialog.show();
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/view/"+id+"?token="+token;
@@ -261,56 +263,56 @@ public class StatusDetailsFragment extends Fragment {
         queue.add(stringRequest);
     }
 
-//    private void getInterestedDonorData() {
-//
-//        RequestQueue queue = Volley.newRequestQueue(mContext);
-//
-//        SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
-//        String token = sharedPreferences.getString("token", "");
-//
-//        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id;
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//
-//                        try {
-//                            interestedDonorItems.clear();
-//                            JSONObject jsonObject = new JSONObject(response);
-//
-//                            JSONArray jsonArray = jsonObject.getJSONArray("interested_donor");
-//
-//                            for (int i = 0; i < jsonArray.length(); i++){
-//                                JSONObject object = jsonArray.getJSONObject(i);
-//
-//                                JSONObject object1 = object.getJSONObject("user");
-//
-//                                InterestedDonorItem data = new InterestedDonorItem(
-//                                        object1.getString("name"),
-//                                        object.getString("blood_request_id"),
-//                                        object.getString("user_id"));
-//
-//                                interestedDonorItems.add(data);
-//
-//                                Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@@@@@@             Donor Data" + interestedDonorItems);
-//                            }
-//
-//                            //Toast.makeText(mContext, "Interested : " + interestedDonorItems.toString(), Toast.LENGTH_SHORT).show();
-//
-//                            interestedPeopleAdapter.notifyDataSetChanged();
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d(TAG, "onErrorResponse: @@@@@@@@@@@@@@@@@@     Volly Error : " + error);
-//            }
-//        });
-//
-//        queue.add(stringRequest);
-//    }
+/*    private void getInterestedDonorData() {
+
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+
+        String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/interested-donor/"+id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            interestedDonorItems.clear();
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            JSONArray jsonArray = jsonObject.getJSONArray("interested_donor");
+
+                            for (int i = 0; i < jsonArray.length(); i++){
+                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                JSONObject object1 = object.getJSONObject("user");
+
+                                InterestedDonorItem data = new InterestedDonorItem(
+                                        object1.getString("name"),
+                                        object.getString("blood_request_id"),
+                                        object.getString("user_id"));
+
+                                interestedDonorItems.add(data);
+
+                                Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@@@@@@             Donor Data" + interestedDonorItems);
+                            }
+
+                            //Toast.makeText(mContext, "Interested : " + interestedDonorItems.toString(), Toast.LENGTH_SHORT).show();
+
+                            interestedPeopleAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: @@@@@@@@@@@@@@@@@@     Volly Error : " + error);
+            }
+        });
+
+        queue.add(stringRequest);
+    }*/
 
     private void totalBloodNeedCounterForPopup() {
         RequestQueue queue = Volley.newRequestQueue(mContext);

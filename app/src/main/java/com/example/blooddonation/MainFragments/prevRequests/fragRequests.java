@@ -25,11 +25,6 @@ public class fragRequests extends Fragment {
     ViewPager2 viewPager;
     FragmentStatusAdapter adapter;
 
-
-    public fragRequests() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);

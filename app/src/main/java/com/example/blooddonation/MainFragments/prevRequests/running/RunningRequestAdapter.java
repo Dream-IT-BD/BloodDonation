@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.blooddonation.MainFragments.prevRequests.details_interested.FragmentInterestedDonor;
 import com.example.blooddonation.MainFragments.prevRequests.fragments.FragmentRunning;
 import com.example.blooddonation.MainFragments.prevRequests.details_interested.StatusDetailsFragment;
+import com.example.blooddonation.MainFragments.prevRequests.importantData;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.RunningRequestRecyclerItemBinding;
 
@@ -23,6 +24,7 @@ public class RunningRequestAdapter extends RecyclerView.Adapter<RunningRequestAd
     private final List<RunningRequestItem> runningRequestItems;
     private final Context context;
     private final FragmentRunning parent;
+//    importantData impData = new importantData();
 
 
     public RunningRequestAdapter(List<RunningRequestItem> runningRequestItems, Context context, FragmentRunning parent) {
@@ -57,10 +59,12 @@ public class RunningRequestAdapter extends RecyclerView.Adapter<RunningRequestAd
                 arguments.putString("id",data.getId());
                 fragment.setArguments(arguments);
 
-                String postID = data.getId();
+                importantData.BLOOD_REQUEST_ID = data.getId();
 
                 FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.dashboard_container, fragment).addToBackStack(null).commit();
+                fragmentTransaction.replace(R.id.dashboard_container, fragment)
+//                        .addToBackStack(null)
+                        .commit();
                 //fragmentTransaction.addToBackStack(null);
 
 //                Fragment fragmentInterestedDonor = new FragmentInterestedDonor();
