@@ -34,7 +34,7 @@ public class HomeElementContainerActivity extends AppCompatActivity {
 
     }
 
-    public void fragmentTransaction(Fragment fragment) {
+    public  void fragmentTransaction(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.dashboard_container, fragment)

@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
@@ -26,6 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.HomeElementContainerActivity;
+import com.example.blooddonation.MainFragments.prevRequests.fragRequests;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentFindBloodDonorBinding;
 import com.google.android.material.textfield.TextInputEditText;
@@ -69,6 +72,8 @@ public class FragmentFindBloodDonor extends Fragment {
         mContext = context;
         super.onAttach(context);
     }
+
+    HomeElementContainerActivity activity = new HomeElementContainerActivity();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,6 +129,7 @@ public class FragmentFindBloodDonor extends Fragment {
 
                 //emptyValidation();
                 bloodRequest();
+
             }
         });
 
@@ -149,7 +155,12 @@ public class FragmentFindBloodDonor extends Fragment {
 
                     if (status.equals("success")){
                         Toast.makeText(mContext, "Request Added", Toast.LENGTH_SHORT).show();
-                        popupWindow();
+//                        popupWindow();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.dashboard_container, new fragRequests())
+                                .addToBackStack(null)
+                                .commit();
                     }else {
                         Toast.makeText(mContext, "Try Again Letter", Toast.LENGTH_SHORT).show();
                     }
@@ -367,6 +378,8 @@ public class FragmentFindBloodDonor extends Fragment {
                 FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, fragment).commit();
                 fragmentTransaction.addToBackStack(null);
+
+
 
             }
         });
