@@ -28,9 +28,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.blooddonation.HomeElementContainerActivity;
+import com.example.blooddonation.MainFragments.home.FragmentHome;
 import com.example.blooddonation.MainFragments.prevRequests.fragRequests;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentFindBloodDonorBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
@@ -154,12 +156,13 @@ public class FragmentFindBloodDonor extends Fragment {
                     Log.d(TAG, "onResponse:    Status           :     " + status);
 
                     if (status.equals("success")){
-                        Toast.makeText(mContext, "Request Added", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "Request Added", Toast.LENGTH_SHORT).show();
+                        //Snackbar.make(getContext(), "Request Added", Snackbar.LENGTH_SHORT).show();
 //                        popupWindow();
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.dashboard_container, new fragRequests())
-                                .addToBackStack(null)
+//                                .addToBackStack(null) Removed because onBackpress we need to go back to home but it was keep cooming back here.
                                 .commit();
                     }else {
                         Toast.makeText(mContext, "Try Again Letter", Toast.LENGTH_SHORT).show();
