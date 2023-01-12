@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        binding = LoginActivityBinding.inflate(getLayoutInflater());
         sharedPreferences = getSharedPreferences("authToken", Context.MODE_PRIVATE);
 
         loadingDialog = new LoadingDialog(LoginActivity.this);
