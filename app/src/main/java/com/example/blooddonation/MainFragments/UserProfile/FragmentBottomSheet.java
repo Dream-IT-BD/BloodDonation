@@ -6,15 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.blooddonation.Auth.LoginActivity;
-import com.example.blooddonation.R;
+import com.example.blooddonation.Auth.ActivityLogin;
 import com.example.blooddonation.databinding.FragmentBottomSheetBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -41,7 +39,7 @@ public class FragmentBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(mContext, SupportActivity.class));
+                startActivity(new Intent(mContext, ActivitySupport.class));
 
                 //Toast.makeText(mContext, "Support Clicked", Toast.LENGTH_SHORT).show();
             }
@@ -78,7 +76,7 @@ public class FragmentBottomSheet extends BottomSheetDialogFragment {
                 editAccessToken.clear();
                 editAccessToken.apply();
 
-                startActivity(new Intent(getContext(), LoginActivity.class));
+                startActivity(new Intent(getContext(), ActivityLogin.class));
                 getActivity().finish(); // for finishing previous activity
 
                 //Toast.makeText(mContext, "Logout Clicked", Toast.LENGTH_SHORT).show();

@@ -31,6 +31,7 @@ import com.ebanx.swipebtn.SwipeButton;
 import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.MainFragments.prevRequests.InterestedAndManagedAdapter;
 import com.example.blooddonation.R;
+import com.example.blooddonation.databinding.FragmentStatusDetailsBinding;
 import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
@@ -48,21 +49,15 @@ public class StatusDetailsFragment extends Fragment {
     Context mContext;
     String id;
     int blood_managed;
-    String blood_need;
-    //FragmentStatusDetailsBinding binding;
-    String token;
-    TextView tvBloodNeed, tvBloodManaged;
+    String token,blood_need;
+    FragmentStatusDetailsBinding binding;
     LoadingDialog loadingDialog;
-
-    TextView patientName, hospitalName, bloodGroup, gender, division, district, upazila, tvDate, btnMarkAsManaged;
-
-
     private List<InterestedDonorItem> interestedDonorItems;
     private RecyclerView.Adapter interestedPeopleAdapter;
-    TabLayout tabLayout;
-    ViewPager2 viewPager;
     InterestedAndManagedAdapter adapter;
 
+//    For Confirmation PopUp
+    TextView tvBloodNeed, tvBloodManaged;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     SwipeButton swipe_btn;
@@ -77,26 +72,9 @@ public class StatusDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //binding = FragmentStatusDetailsBinding.inflate(inflater, container, false);
-        View view = inflater.inflate(R.layout.fragment_status_details, container, false);
-
-        tabLayout = view.findViewById(R.id.tabLayout);
-        viewPager = view.findViewById(R.id.viewPager);
-
-        patientName = view.findViewById(R.id.patient_name);
-        hospitalName = view.findViewById(R.id.hospital_name);
-        bloodGroup = view.findViewById(R.id.blood_group);
-        gender = view.findViewById(R.id.gender);
-        division = view.findViewById(R.id.division);
-        district = view.findViewById(R.id.tvDistrict);
-        upazila = view.findViewById(R.id.tvUpazila);
-        tvDate = view.findViewById(R.id.tvDate);
-
-        btnMarkAsManaged = view.findViewById(R.id.btnMarkAsManaged);
-
-
+        binding = FragmentStatusDetailsBinding.inflate(inflater, container, false);
+        //View view = inflater.inflate(R.layout.fragment_status_details, container, false);
         loadingDialog = new LoadingDialog(mContext);
-
 
         SharedPreferences sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
@@ -113,21 +91,18 @@ public class StatusDetailsFragment extends Fragment {
         arguments.putString("idTwo",id);
         fragmentInterestedDonor.setArguments(arguments);
 
-
-
         // TabLayout Fragment Handle
-
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         adapter = new InterestedAndManagedAdapter(fragmentManager, getLifecycle());
-        viewPager.setAdapter(adapter);
+        binding.viewPager.setAdapter(adapter);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Interested"));
-        tabLayout.addTab(tabLayout.newTab().setText("Managed"));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Interested"));
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Managed"));
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                binding.viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -141,15 +116,12 @@ public class StatusDetailsFragment extends Fragment {
             }
         });
 
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-                tabLayout.selectTab(tabLayout.getTabAt(position));
+                binding.tabLayout.selectTab(binding.tabLayout.getTabAt(position));
             }
         });
-
-
-
 
         // Interested People
 
@@ -159,7 +131,7 @@ public class StatusDetailsFragment extends Fragment {
 //        binding.interestedPeopleRecyclerView.setAdapter(interestedPeopleAdapter);
 
 
-        btnMarkAsManaged.setOnClickListener(new View.OnClickListener() {
+        binding.btnMarkAsManaged.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertPopup();
@@ -170,7 +142,7 @@ public class StatusDetailsFragment extends Fragment {
 //        getInterestedDonorData();
         fetchRequestDetails();
 
-        return view;
+        return binding.getRoot();
     }
 
     private void fetchRequestDetails() {
@@ -186,19 +158,19 @@ public class StatusDetailsFragment extends Fragment {
                 try {
                     Log.d(TAG, "onResponse: "+response);
                     JSONObject jsonObject = new JSONObject(response);
-                    patientName.setText(jsonObject.getString("patient_name"));
-                    hospitalName.setText(jsonObject.getString("hospital_name"));
-                    bloodGroup.setText(jsonObject.getString("blood_group"));
-                    gender.setText(jsonObject.getString("gender"));
-                    division.setText(jsonObject.getString("division"));
-                    district.setText(jsonObject.getString("district"));
-                    upazila.setText(jsonObject.getString("upazila"));
+                    binding.patientName.setText(jsonObject.getString("patient_name"));
+                    binding.hospitalName.setText(jsonObject.getString("hospital_name"));
+                    binding.bloodGroup.setText(jsonObject.getString("blood_group"));
+                    binding.gender.setText(jsonObject.getString("gender"));
+                    binding.division.setText(jsonObject.getString("division"));
+                    binding.tvDistrict.setText(jsonObject.getString("district"));
+                    binding.tvUpazila.setText(jsonObject.getString("upazila"));
 
                     String dateFromAPI = jsonObject.getString("updated_at");
 
                     String date = dateFromAPI.substring(0,10);
 
-                    tvDate.setText(date);
+                    binding.tvDate.setText(date);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -422,28 +394,3 @@ public class StatusDetailsFragment extends Fragment {
 
     }
 }
-
-// Previous Interested Donor
-/*
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/interested_people_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"/>
-
-
-        </LinearLayout>
-    </ScrollView>
- */

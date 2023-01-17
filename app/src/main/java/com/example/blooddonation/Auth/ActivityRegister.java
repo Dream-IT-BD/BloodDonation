@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.blooddonation.HomeActivity;
 import com.example.blooddonation.R;
+import com.example.blooddonation.databinding.ActivityRegisterBinding;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -36,16 +37,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity {
+public class ActivityRegister extends AppCompatActivity {
 
-    TextInputEditText etFullName, etPhoneNumber, etAddress, etAgeForRegister, etWeightForRegister, etPasswordOneForRegister, etPasswordTwoForRegister;
-    AutoCompleteTextView spinnerGender, spinnerBloodGroup, spinnerDivision, spinnerDistrict, spinnerUpazila;
-    Button btnRegister;
-    String gender, bloodGroup, division;
     private ArrayList<String> divisions ,districts ,upazilas;
-    String myMainAuthToken;
+    ActivityRegisterBinding binding;
     public SharedPreferences sharedPreferences;
-    TextInputLayout customerSpinnerLayout;
+
 
     private static final String TAG = "RegisterActivity";
 
@@ -53,51 +50,31 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         sharedPreferences = getSharedPreferences("authToken", Context.MODE_PRIVATE);
 
         getDivisionData();
 
-        // Spinner
-        spinnerGender = findViewById(R.id.spinnerGender);
-        spinnerBloodGroup = findViewById(R.id.spinnerBloodGroup);
-
-        spinnerDivision = findViewById(R.id.spinnerDivision);
-        spinnerDistrict = findViewById(R.id.spinnerDistrict);
-        spinnerUpazila = findViewById(R.id.spinnerUpazila);
         spinnerConfig();
 
-//        // EditText
-        etFullName = findViewById(R.id.etUserName);
-        etPhoneNumber = findViewById(R.id.etPhoneNumber);
-        etAddress = findViewById(R.id.etAddress);
-        etAgeForRegister = findViewById(R.id.etAgeForRegister);
-        etWeightForRegister = findViewById(R.id.etWeightForRegister);
-        etPasswordOneForRegister = findViewById(R.id.etPasswordOneForRegister);
-        etPasswordTwoForRegister = findViewById(R.id.etPasswordTwoForRegister);
-
-        customerSpinnerLayout = findViewById(R.id.customerSpinnerLayout);
-
-        // Button
-        btnRegister = findViewById(R.id.btnEditConfirm);
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                emptyError();
 
                 registerRequest();
 
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Name : " + etFullName.getText());
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Phone : " + etPhoneNumber.getText());
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Address : " + etAddress.getText());
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Age : " + etAgeForRegister.getText());
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Weight : " + etWeightForRegister.getText());
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Password : " + etPasswordOneForRegister.getText());
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Password : " + etPasswordTwoForRegister.getText());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Name : " + binding.etUserName.getText());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Phone : " + binding.etPhoneNumber.getText());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Address : " + binding.etAddress.getText());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Age : " + binding.etAgeForRegister.getText());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Weight : " + binding.etWeightForRegister.getText());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Password : " + binding.etPasswordOneForRegister.getText());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Password : " + binding.etPasswordTwoForRegister.getText());
 
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Division : " + spinnerDivision.getText().toString());
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    District : " + spinnerDistrict.getText().toString());
-                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Upazila : " + spinnerUpazila.getText().toString());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Division : " + binding.spinnerDivision.getText().toString());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    District : " + binding.spinnerDistrict.getText().toString());
+                Log.d(TAG, "onClick: @@@@@@@@@@@@@@@                    Upazila : " + binding.spinnerUpazila.getText().toString());
 
             }
         });
@@ -106,14 +83,14 @@ public class RegisterActivity extends AppCompatActivity {
         districts = new ArrayList<String>();
         upazilas = new ArrayList<String>();
 
-        spinnerDivision.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.spinnerDivision.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getDistrictData();
             }
         });
 
-        spinnerDistrict.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.spinnerDistrict.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getUpazilaData();
@@ -160,17 +137,17 @@ public class RegisterActivity extends AppCompatActivity {
             protected Map<String, String> getParams(){
 
                 String name, number, blood_group, gender, age, weight, division, district, upazila, password, password_confirmation;
-                name = etFullName.getText().toString();
-                number = etPhoneNumber.getText().toString();
-                blood_group = spinnerBloodGroup.getText().toString();
-                gender = spinnerGender.getText().toString();
-                age = etAgeForRegister.getText().toString();
-                weight = etWeightForRegister.getText().toString();
-                division = spinnerDivision.getText().toString();
-                district = spinnerDistrict.getText().toString();
-                upazila = spinnerUpazila.getText().toString();
-                password = etPasswordOneForRegister.getText().toString();
-                password_confirmation = etPasswordTwoForRegister.getText().toString();
+                name = binding.etUserName.getText().toString();
+                number = binding.etPhoneNumber.getText().toString();
+                blood_group = binding.spinnerBloodGroup.getText().toString();
+                gender = binding.spinnerGender.getText().toString();
+                age = binding.etAgeForRegister.getText().toString();
+                weight = binding.etWeightForRegister.getText().toString();
+                division = binding.spinnerDivision.getText().toString();
+                district = binding.spinnerDistrict.getText().toString();
+                upazila = binding.spinnerUpazila.getText().toString();
+                password = binding.etPasswordOneForRegister.getText().toString();
+                password_confirmation = binding.etPasswordTwoForRegister.getText().toString();
 
                 Log.d(TAG, "getParams: ..........................." + name + "......" + number +  "......" + blood_group + "....." + gender + "......" + age + "....." +
                         weight + "....." + division + "....." + district + "....." + upazila + "......" + password + "......" + password_confirmation);
@@ -194,7 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void loginRequest() {
-        RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(ActivityRegister.this);
         String url = "https://blood.dreamitdevlopment.com/public/api/login";
 
 
@@ -214,7 +191,7 @@ public class RegisterActivity extends AppCompatActivity {
                     editor.putString("token", token);
                     editor.apply();
 
-                    Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(ActivityRegister.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
 
@@ -233,8 +210,8 @@ public class RegisterActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams(){
-                String phone = etPhoneNumber.getText().toString();
-                String pass = etPasswordTwoForRegister.getText().toString();
+                String phone = binding.etPhoneNumber.getText().toString();
+                String pass = binding.etPasswordTwoForRegister.getText().toString();
 
                 Log.d(TAG, "getParams: ..........................." + phone + "   ....  "  + pass);
 
@@ -251,17 +228,17 @@ public class RegisterActivity extends AppCompatActivity {
     private void emptyError() {
 
         String name, number, blood_group, gender, age, weight, division, district, upazila, password, password_confirmation;
-        name = etFullName.getText().toString();
-        number = etPhoneNumber.getText().toString();
-        blood_group = spinnerBloodGroup.getText().toString();
-        gender = spinnerGender.getText().toString();
-        age = etAgeForRegister.getText().toString();
-        weight = etWeightForRegister.getText().toString();
-        division = spinnerDivision.getText().toString();
-        district = spinnerDistrict.getText().toString();
-        upazila = spinnerUpazila.getText().toString();
-        password = etPasswordOneForRegister.getText().toString();
-        password_confirmation = etPasswordTwoForRegister.getText().toString();
+        name = binding.etUserName.getText().toString();
+        number = binding.etPhoneNumber.getText().toString();
+        blood_group = binding.spinnerBloodGroup.getText().toString();
+        gender = binding.spinnerGender.getText().toString();
+        age = binding.etAgeForRegister.getText().toString();
+        weight = binding.etWeightForRegister.getText().toString();
+        division = binding.spinnerDivision.getText().toString();
+        district = binding.spinnerDistrict.getText().toString();
+        upazila = binding.spinnerUpazila.getText().toString();
+        password = binding.etPasswordOneForRegister.getText().toString();
+        password_confirmation = binding.etPasswordTwoForRegister.getText().toString();
 
 
         /*
@@ -269,42 +246,38 @@ public class RegisterActivity extends AppCompatActivity {
          */
 
         if (name.isEmpty()){
-            etFullName.setError("Type your name");
-            etFullName.requestFocus();
-        }else if (gender.isEmpty()){
-            customerSpinnerLayout.setError("Select your gender");
-//            customerSpinnerLayout.requestFocus();
+            binding.etUserName.setError("Type your name");
+            binding.etUserName.requestFocus();
         }else if (blood_group.isEmpty()){
-            spinnerBloodGroup.setError("Select your blood group");
-            spinnerBloodGroup.requestFocus();
+            binding.spinnerBloodGroup.setError("Select your blood group");
+            binding.spinnerBloodGroup.requestFocus();
         }else if (number.isEmpty()){
-            etPhoneNumber.setError("Type Phone Number");
-            etPhoneNumber.requestFocus();
+            binding.etPhoneNumber.setError("Type Phone Number");
+            binding.etPhoneNumber.requestFocus();
         }else if (age.isEmpty()){
-            etAgeForRegister.setError("Your age ?");
-            etAgeForRegister.requestFocus();
+            binding.etAgeForRegister.setError("Your age ?");
+            binding.etAgeForRegister.requestFocus();
         }else if (weight.isEmpty()){
-            etWeightForRegister.setError("Your weight ?");
-            etWeightForRegister.requestFocus();
+            binding.etWeightForRegister.setError("Your weight ?");
+            binding.etWeightForRegister.requestFocus();
         }else if (division.isEmpty()){
-            spinnerDivision.setError("This can't be empty");
-            spinnerDivision.requestFocus();
-
+            binding.spinnerDivision.setError("This can't be empty");
+            binding.spinnerDivision.requestFocus();
         }else if (district.isEmpty()){
-            spinnerDistrict.setError("This can't be empty");
-            spinnerDistrict.requestFocus();
+            binding.spinnerDistrict.setError("This can't be empty");
+            binding.spinnerDistrict.requestFocus();
         }else if (upazila.isEmpty()){
-            spinnerUpazila.setError("This can't be empty");
-            spinnerUpazila.requestFocus();
+            binding.spinnerUpazila.setError("This can't be empty");
+            binding.spinnerUpazila.requestFocus();
         }else if (password.isEmpty()){
-            etPasswordOneForRegister.setError("Please type a password");
-            etPasswordOneForRegister.requestFocus();
+            binding.etPasswordOneForRegister.setError("Please type a password");
+            binding.etPasswordOneForRegister.requestFocus();
         }else if (password_confirmation.isEmpty()){
-            etPasswordTwoForRegister.setError("Please type previous password");
-            etPasswordTwoForRegister.requestFocus();
+            binding.etPasswordTwoForRegister.setError("Please type previous password");
+            binding.etPasswordTwoForRegister.requestFocus();
         }else if (!password.equals(password_confirmation)){
-            etPasswordTwoForRegister.setError("Don't match");
-            etPasswordTwoForRegister.requestFocus();
+            binding.etPasswordTwoForRegister.setError("Don't match");
+            binding.etPasswordTwoForRegister.requestFocus();
         }else {
             Toast.makeText(getApplicationContext(), "Hold Tight", Toast.LENGTH_SHORT).show();
         }
@@ -346,8 +319,8 @@ public class RegisterActivity extends AppCompatActivity {
                             }
 
                             /*for address select*/
-                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_spinner_dropdown_item, divisions);
-                            spinnerDivision.setAdapter(divisionAdapter);
+                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(ActivityRegister.this, android.R.layout.simple_spinner_dropdown_item, divisions);
+                            binding.spinnerDivision.setAdapter(divisionAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -364,10 +337,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void getDistrictData() {
         districts.clear();
-        spinnerDistrict.setText(null);
+        binding.spinnerDistrict.setText(null);
 
-        RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-        String url = "https://blood.dreamitdevlopment.com/public/api/district?district_id=" + spinnerDivision.getText().toString();
+        RequestQueue queue = Volley.newRequestQueue(ActivityRegister.this);
+        String url = "https://blood.dreamitdevlopment.com/public/api/district?district_id=" + binding.spinnerDivision.getText().toString();
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -388,8 +361,8 @@ public class RegisterActivity extends AppCompatActivity {
                             }
 
                             /*for address select*/
-                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_spinner_dropdown_item, districts);
-                            spinnerDistrict.setAdapter(divisionAdapter);
+                            ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(ActivityRegister.this, android.R.layout.simple_spinner_dropdown_item, districts);
+                            binding.spinnerDistrict.setAdapter(divisionAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -407,10 +380,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void getUpazilaData(){
 
         upazilas.clear();
-        spinnerUpazila.setText(null);
+        binding.spinnerUpazila.setText(null);
 
-        RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-        String url = "https://blood.dreamitdevlopment.com/public/api/upazila?district_id=" + spinnerDistrict.getText().toString();
+        RequestQueue queue = Volley.newRequestQueue(ActivityRegister.this);
+        String url = "https://blood.dreamitdevlopment.com/public/api/upazila?district_id=" + binding.spinnerDistrict.getText().toString();
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -431,8 +404,8 @@ public class RegisterActivity extends AppCompatActivity {
                             }
 
                             /*for address select*/
-                            ArrayAdapter<String> upazilaAdapter = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_spinner_dropdown_item, upazilas);
-                            spinnerUpazila.setAdapter(upazilaAdapter);
+                            ArrayAdapter<String> upazilaAdapter = new ArrayAdapter<>(ActivityRegister.this, android.R.layout.simple_spinner_dropdown_item, upazilas);
+                            binding.spinnerUpazila.setAdapter(upazilaAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -453,14 +426,14 @@ public class RegisterActivity extends AppCompatActivity {
                 R.array.gender,
                 android.R.layout.simple_spinner_item);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGender.setAdapter(genderAdapter);
+        binding.spinnerGender.setAdapter(genderAdapter);
 
         // Blood Group Spinner
         ArrayAdapter<CharSequence> bloodGroupAdapter = ArrayAdapter.createFromResource(this,
                 R.array.blood_group,
                 android.R.layout.simple_spinner_item);
         bloodGroupAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerBloodGroup.setAdapter(bloodGroupAdapter);
+        binding.spinnerBloodGroup.setAdapter(bloodGroupAdapter);
 
         // Division Selection Spinner
 //        ArrayAdapter<CharSequence> divisionAdapter = ArrayAdapter.createFromResource(this,

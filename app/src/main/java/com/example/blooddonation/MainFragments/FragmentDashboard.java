@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,14 +19,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.blooddonation.HomeElementContainerActivity;
-import com.example.blooddonation.MainFragments.home.FragmentHome;
-import com.example.blooddonation.MainFragments.prevRequests.fragRequests;
-import com.example.blooddonation.R;
-import com.example.blooddonation.databinding.FragmentDashboardBinding;
-import com.example.blooddonation.databinding.HomeActivityBinding;
 
 import org.json.JSONException;
 import org.json.JSONObject;

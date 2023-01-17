@@ -6,13 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.blooddonation.Auth.LoginActivity;
+import com.example.blooddonation.Auth.ActivityLogin;
 import com.example.blooddonation.OnlineStatus.CheckNetwork;
 import com.example.blooddonation.OnlineStatus.NoInternet;
 
@@ -34,7 +30,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
 
                 if (CheckNetwork.isInternetAvailable(getApplicationContext())){
-                    startActivity(new Intent(SplashScreen.this, LoginActivity.class));
+                    startActivity(new Intent(SplashScreen.this, ActivityLogin.class));
                     finish();
                 }else{
 //            getSupportFragmentManager().beginTransaction().add(R.id.loginActivity, new fragNoInternet()).commit();

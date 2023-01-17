@@ -40,7 +40,6 @@ public class FragmentManagedDonor extends Fragment {
 
     Context mContext;
     FragmentManagedDonorBinding binding;
-
     String bloodRequestID;
 
     private List<ManagedDonorItem> managedDonorItems;

@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -28,12 +27,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.blooddonation.HomeElementContainerActivity;
-import com.example.blooddonation.MainFragments.home.FragmentHome;
-import com.example.blooddonation.MainFragments.prevRequests.fragRequests;
+import com.example.blooddonation.MainFragments.prevRequests.fragmentRequests;
 import com.example.blooddonation.R;
-import com.example.blooddonation.databinding.FragmentFindBloodDonorBinding;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,20 +41,15 @@ import java.util.Map;
 
 public class FragmentFindBloodDonor extends Fragment {
 
-
     private static final String TAG = "fragFindBloodDonor";
-
     FragmentFindBloodDonorBinding binding;
     Context mContext;
-    AutoCompleteTextView spinnerBloodGroup, spinnerGender, spinnerDivision, spinnerDistrict, spinnerUpazila;
-    TextInputEditText etPatientName, etPatientDiagnosis, etHospitalName, etHospitalAddress, etBloodAmount, etAdditionalNote;
-    Button btnRegister;
     private ArrayList<String> divisions ,districts ,upazilas;
     String token;
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
 
-
+//    Don't delete ! This is for empty field validator
     String requestingBloodGroup;
     String patientName, hospitalName, hospitalLocation;
     Editable contactNumber;
@@ -82,22 +73,7 @@ public class FragmentFindBloodDonor extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentFindBloodDonorBinding.inflate(inflater, container, false);
-        View view = inflater.inflate(R.layout.fragment_find_blood_donor, container, false);
-
-        etPatientName = view.findViewById(R.id.etPatientName);
-        etPatientDiagnosis = view.findViewById(R.id.etPatientDiagnosis);
-        etHospitalName = view.findViewById(R.id.etHospitalName);
-        etHospitalAddress = view.findViewById(R.id.etHospitalAddress);
-        etBloodAmount = view.findViewById(R.id.etBloodAmount);
-        etAdditionalNote = view.findViewById(R.id.etAdditionalNote);
-
-        spinnerBloodGroup = view.findViewById(R.id.spinnerBloodGroup);
-        spinnerGender = view.findViewById(R.id.spinnerGender);
-        spinnerDivision = view.findViewById(R.id.spinnerDivision);
-        spinnerDistrict = view.findViewById(R.id.spinnerDistrict);
-        spinnerUpazila = view.findViewById(R.id.spinnerUpazila);
-
-        btnRegister = view.findViewById(R.id.btnEditConfirm);
+        //View view = inflater.inflate(R.layout.fragment_find_blood_donor, container, false);
 
         divisions = new ArrayList<String>();
         districts = new ArrayList<String>();
@@ -110,21 +86,21 @@ public class FragmentFindBloodDonor extends Fragment {
 
         spinnerConfig();
 
-        spinnerDivision.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.spinnerDivision.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getDistrictData();
             }
         });
 
-        spinnerDistrict.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        binding.spinnerDistrict.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 getUpazilaData();
             }
         });
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        binding.btnFindBloodDonor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: @@@@@@@@@@@@@@@@                         Submit Button Clicked");
@@ -135,7 +111,7 @@ public class FragmentFindBloodDonor extends Fragment {
             }
         });
 
-        return view;
+        return binding.getRoot();
     }
 
     private void bloodRequest() {
@@ -157,12 +133,17 @@ public class FragmentFindBloodDonor extends Fragment {
 
                     if (status.equals("success")){
                         //Toast.makeText(mContext, "Request Added", Toast.LENGTH_SHORT).show();
-                        //Snackbar.make(getContext(), "Request Added", Snackbar.LENGTH_SHORT).show();
 //                        popupWindow();
+
+                        // Not Tested yet because domain is expired :(
+                        Snackbar bar = Snackbar.make(getView().findViewById(R.id.findBloodDonorXML), " ", Snackbar.LENGTH_LONG);
+                        bar.setText("Request Added");
+                        bar.show();
+
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.dashboard_container, new fragRequests())
-//                                .addToBackStack(null) Removed because onBackpress we need to go back to home but it was keep cooming back here.
+                        fragmentTransaction.replace(R.id.dashboard_container, new fragmentRequests())
+//                                .addToBackStack(null) Removed because onBackPress we need to go back to home but it was keep coming back here.
                                 .commit();
                     }else {
                         Toast.makeText(mContext, "Try Again Letter", Toast.LENGTH_SHORT).show();
@@ -184,17 +165,17 @@ public class FragmentFindBloodDonor extends Fragment {
 
                 String patient_name, patient_diagnosis, blood_group, blood_amount, gender, hospital_name, hospital_address, division, district, upazila, note;
 
-                patient_name = etPatientName.getText().toString().trim();
-                patient_diagnosis = etPatientDiagnosis.getText().toString().trim();
-                blood_group = spinnerBloodGroup.getText().toString();
-                blood_amount = etBloodAmount.getText().toString().trim();
-                gender = spinnerGender.getText().toString();
-                hospital_name = etHospitalName.getText().toString().trim();
-                hospital_address = etHospitalAddress.getText().toString().trim();
-                division = spinnerDivision.getText().toString();
-                district = spinnerDistrict.getText().toString();
-                upazila = spinnerUpazila.getText().toString();
-                note = etAdditionalNote.getText().toString();
+                patient_name = binding.etPatientName.getText().toString().trim();
+                patient_diagnosis = binding.etPatientDiagnosis.getText().toString().trim();
+                blood_group = binding.spinnerBloodGroup.getText().toString();
+                blood_amount = binding.etBloodAmount.getText().toString().trim();
+                gender = binding.spinnerGender.getText().toString();
+                hospital_name = binding.etHospitalName.getText().toString().trim();
+                hospital_address = binding.etHospitalAddress.getText().toString().trim();
+                division = binding.spinnerDivision.getText().toString();
+                district = binding.spinnerDistrict.getText().toString();
+                upazila = binding.spinnerUpazila.getText().toString();
+                note = binding.etAdditionalNote.getText().toString();
 
 
                 Log.d(TAG, "getParams: ............." + patient_name + "......" + patient_diagnosis +  "......" + blood_group + "....." + blood_amount + "........." + gender + "......" +
@@ -240,7 +221,7 @@ public class FragmentFindBloodDonor extends Fragment {
 
                             /*for address select*/
                             ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, divisions);
-                            spinnerDivision.setAdapter(divisionAdapter);
+                            binding.spinnerDivision.setAdapter(divisionAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -257,10 +238,10 @@ public class FragmentFindBloodDonor extends Fragment {
 
     private void getDistrictData() {
         districts.clear();
-        spinnerDistrict.setText(null);
+        binding.spinnerDistrict.setText(null);
 
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String url = "https://blood.dreamitdevlopment.com/public/api/district?district_id=" + spinnerDivision.getText().toString();
+        String url = "https://blood.dreamitdevlopment.com/public/api/district?district_id=" + binding.spinnerDivision.getText().toString();
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -282,7 +263,7 @@ public class FragmentFindBloodDonor extends Fragment {
 
                             /*for address select*/
                             ArrayAdapter<String> divisionAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, districts);
-                            spinnerDistrict.setAdapter(divisionAdapter);
+                            binding.spinnerDistrict.setAdapter(divisionAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -300,10 +281,10 @@ public class FragmentFindBloodDonor extends Fragment {
     private void getUpazilaData(){
 
         upazilas.clear();
-        spinnerUpazila.setText(null);
+        binding.spinnerUpazila.setText(null);
 
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String url = "https://blood.dreamitdevlopment.com/public/api/upazila?district_id=" + spinnerDistrict.getText().toString();
+        String url = "https://blood.dreamitdevlopment.com/public/api/upazila?district_id=" + binding.spinnerDistrict.getText().toString();
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -325,7 +306,7 @@ public class FragmentFindBloodDonor extends Fragment {
 
                             /*for address select*/
                             ArrayAdapter<String> upazilaAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, upazilas);
-                            spinnerUpazila.setAdapter(upazilaAdapter);
+                            binding.spinnerUpazila.setAdapter(upazilaAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -346,14 +327,14 @@ public class FragmentFindBloodDonor extends Fragment {
                 R.array.blood_group,
                 android.R.layout.simple_spinner_item);
         bloodGroupAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerBloodGroup.setAdapter(bloodGroupAdapter);
+        binding.spinnerBloodGroup.setAdapter(bloodGroupAdapter);
 
         // Gender Selector Spinner
         ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.gender,
                 android.R.layout.simple_spinner_item);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGender.setAdapter(genderAdapter);
+        binding.spinnerGender.setAdapter(genderAdapter);
 
     }
 

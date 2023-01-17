@@ -218,7 +218,7 @@
                 app:startIconDrawable="@drawable/ic_age">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAgeForRegister"
+                    android:id="@+id/etAge"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
@@ -238,7 +238,7 @@
                 app:startIconDrawable="@drawable/ic_weight">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etWeightForRegister"
+                    android:id="@+id/etWeight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />

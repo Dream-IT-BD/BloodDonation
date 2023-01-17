@@ -41,7 +41,6 @@ public class FragmentRunning extends Fragment {
     private static final String TAG = "FragmentRunning";
     Context mContext;
     FragmentRunningBinding binding;
-
     private List<RunningRequestItem> runningRequestItems;
     private RecyclerView.Adapter runningRequestAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -133,10 +132,5 @@ public class FragmentRunning extends Fragment {
             }
         }) ;
         queue.add(stringRequest);
-
-
-
     }
-
-
 }

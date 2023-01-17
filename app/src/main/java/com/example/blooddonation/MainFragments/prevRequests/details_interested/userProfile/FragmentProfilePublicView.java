@@ -66,9 +66,7 @@ public class FragmentProfilePublicView extends Fragment {
 
 
         getInterestedDonorData();
-
         //interestedDonorData();
-
 
         binding.btnContactNow.setOnClickListener(new View.OnClickListener() {
             @Override

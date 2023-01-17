@@ -9,26 +9,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonation.R;
+import com.example.blooddonation.databinding.ActivitySupportBinding;
 
-public class SupportActivity extends AppCompatActivity {
+public class ActivitySupport extends AppCompatActivity {
 
     private static final String TAG = "SupportActivity";
-    LinearLayout donateViaBikash, donateViaNagad;
     final String donationNumber = "01712508520";
+    ActivitySupportBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support);
+        binding = ActivitySupportBinding.inflate(getLayoutInflater());
 
-        donateViaBikash = findViewById(R.id.donateViaBikash);
-        donateViaNagad = findViewById(R.id.donateViaNagad);
-
-        donateViaBikash.setOnClickListener(new View.OnClickListener() {
+        binding.donateViaBikash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -36,12 +34,12 @@ public class SupportActivity extends AppCompatActivity {
                 ClipData clipData = ClipData.newPlainText("DonationNumber", donationNumber);
                 clipboardManager.setPrimaryClip(clipData);
 
-                Toast.makeText(SupportActivity.this, "কপি সম্পন্ন : " + donationNumber, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivitySupport.this, "কপি সম্পন্ন : " + donationNumber, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClick: @@@@@@@@@@@@@@@              Bikash Donation Number Copy Complete");
             }
         });
 
-        donateViaNagad.setOnClickListener(new View.OnClickListener() {
+        binding.donateViaNagad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -49,7 +47,7 @@ public class SupportActivity extends AppCompatActivity {
                 ClipData clipData = ClipData.newPlainText("DonationNumber", donationNumber);
                 clipboardManager.setPrimaryClip(clipData);
 
-                Toast.makeText(SupportActivity.this, "কপি সম্পন্ন : " + donationNumber, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivitySupport.this, "কপি সম্পন্ন : " + donationNumber, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClick: @@@@@@@@@@@@@@@              Nagad Donation Number Complete");
             }
         });

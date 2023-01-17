@@ -20,7 +20,7 @@
             android:name=".MainFragments.UserProfile.EditProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".MainFragments.UserProfile.SupportActivity"
+            android:name=".MainFragments.UserProfile.ActivitySupport"
             android:exported="false" />
         <activity
             android:name=".HomeElementContainerActivity"
@@ -38,10 +38,10 @@
             android:name=".Auth.ForgetPassword"
             android:exported="true" />
         <activity
-            android:name=".Auth.RegisterActivity"
+            android:name=".Auth.ActivityRegister"
             android:exported="true" />
         <activity
-            android:name=".Auth.LoginActivity"
+            android:name=".Auth.ActivityLogin"
             android:exported="true" />
         <activity
             android:name=".SplashScreen"

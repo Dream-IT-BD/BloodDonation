@@ -3,44 +3,31 @@ package com.example.blooddonation.Auth;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.airbnb.lottie.L;
-import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.example.blooddonation.HomeActivity;
 import com.example.blooddonation.LoadingDialog;
-import com.example.blooddonation.MainFragments.FragmentDashboard;
 import com.example.blooddonation.R;
-import com.example.blooddonation.databinding.LoginActivityBinding;
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.blooddonation.databinding.ActivityLoginBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,40 +37,40 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity {
+public class ActivityLogin extends AppCompatActivity {
 
     String myMainAuthToken;
     public SharedPreferences sharedPreferences;
-    LoginActivityBinding binding;
-    TextInputEditText etPhone, etPassword;
-    TextView tvRegisterNow;
-    Button btnLogin;
+    ActivityLoginBinding binding;
+//    TextInputEditText etPhone, etPassword;
+//    TextView tvRegisterNow;
+//    Button btnLogin;
     LoadingDialog loadingDialog;
     String token, userSelectedDateOfLastDonation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
-        binding = LoginActivityBinding.inflate(getLayoutInflater());
+        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         sharedPreferences = getSharedPreferences("authToken", Context.MODE_PRIVATE);
 
-        loadingDialog = new LoadingDialog(LoginActivity.this);
+        loadingDialog = new LoadingDialog(ActivityLogin.this);
 
-        etPhone = findViewById(R.id.etPhone);
-        etPassword = findViewById(R.id.etPassword);
-        tvRegisterNow = findViewById(R.id.tvRegisterNow);
-        btnLogin = findViewById(R.id.btnLogin);
+//        etPhone = findViewById(R.id.etPhone);
+//        etPassword = findViewById(R.id.etPassword);
+//        tvRegisterNow = findViewById(R.id.tvRegisterNow);
+//        btnLogin = findViewById(R.id.btnLogin);
 
-        tvRegisterNow.setOnClickListener(new View.OnClickListener() {
+        binding.tvRegisterNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(ActivityLogin.this, ActivityRegister.class);
                 startActivity(intent);
             }
         });
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -152,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     saveUserProfileData();
 
-                    Toast.makeText(LoginActivity.this, "Login Done", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityLogin.this, "Login Done", Toast.LENGTH_SHORT).show();
 
 
 
@@ -169,13 +156,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 loadingDialog.hide();
                 Log.d(TAG, "onErrorResponse:    " +error);
-                Toast.makeText(LoginActivity.this, "Login Field", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityLogin.this, "Login Field", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams(){
-                String phone = etPhone.getText().toString().trim();
-                String pass = etPassword.getText().toString();
+                String phone = binding.etPhone.getText().toString().trim();
+                String pass = binding.etPassword.getText().toString();
 
                 Log.d(TAG, "getParams: ..........................." + phone + "   ....  "  + pass);
 
@@ -190,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveUserProfileData() {
-        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(ActivityLogin.this);
         String url = "https://blood.dreamitdevlopment.com/public/api/personal-profile-view?token=" + token;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -238,7 +225,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getUserPreviousBloodDonationData() {
-        RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(ActivityLogin.this);
         String url = "https://blood.dreamitdevlopment.com/public/api/personal-profile-view?token=" + token;
         Log.d(TAG, "getUserPreviousBloodDonationData: @@@@@@@@@@@@@@@@             token : " + token);
 
@@ -260,7 +247,7 @@ public class LoginActivity extends AppCompatActivity {
                             datePickerPopup();
                         }else {
                             // I'll navigate to the next activity
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            startActivity(new Intent(ActivityLogin.this, HomeActivity.class));
                             finish();
 
                             //Log.d(TAG, "onResponse: @@@@@@@@@@@           Record : " + blood);
@@ -295,7 +282,7 @@ public class LoginActivity extends AppCompatActivity {
         final int monthFrom = calendar.get(Calendar.MONTH);
         final int dayFrom = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(LoginActivity.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(ActivityLogin.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
@@ -312,7 +299,7 @@ public class LoginActivity extends AppCompatActivity {
         datePickerDialog.setButton(DatePickerDialog.BUTTON_NEGATIVE, "SKIP", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(LoginActivity.this, "Skip", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityLogin.this, "Skip", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onCancel: @@@@@@@@@@@@@@                You Pressed Skip");
             }
         });
@@ -335,10 +322,10 @@ public class LoginActivity extends AppCompatActivity {
                     String requestStatus = jsonObject.getString("status");
 
                     if (requestStatus.equals("success")){
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        startActivity(new Intent(ActivityLogin.this, HomeActivity.class));
                         finish();
                     }else {
-                        Toast.makeText(LoginActivity.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityLogin.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -374,8 +361,8 @@ public class LoginActivity extends AppCompatActivity {
         token = sharedPreferences.getString("token","");
 
         if (!token.isEmpty()){
-            Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            Toast.makeText(ActivityLogin.this, token, Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ActivityLogin.this, HomeActivity.class));
             finish();
         }
     }

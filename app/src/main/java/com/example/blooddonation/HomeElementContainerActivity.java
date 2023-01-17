@@ -10,7 +10,7 @@ import android.os.Bundle;
 
 import com.example.blooddonation.MainFragments.FragmentFindBloodDonor;
 import com.example.blooddonation.MainFragments.home.FragmentHome;
-import com.example.blooddonation.MainFragments.prevRequests.fragRequests;
+import com.example.blooddonation.MainFragments.prevRequests.fragmentRequests;
 
 public class HomeElementContainerActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class HomeElementContainerActivity extends AppCompatActivity {
         } else if (intentFlag.equals("addBloodRequest")) {
             fragmentTransaction(new FragmentFindBloodDonor());
         } else {
-            fragmentTransaction(new fragRequests());
+            fragmentTransaction(new fragmentRequests());
         }
 
     }

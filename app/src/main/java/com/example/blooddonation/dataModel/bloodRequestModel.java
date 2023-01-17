@@ -3,22 +3,6 @@ package com.example.blooddonation.dataModel;
 import androidx.annotation.NonNull;
 
 public class bloodRequestModel {
-    /*
-    {
-    "id": 1,
-    "user_id": 1,
-    "patient_name": "Md test",
-    "patient_diagnosis": "test diagnosis",
-    "blood_group": "A+",
-    "hospital_name": "test Hospital",
-    "gender": "Male",
-    "division": "Rajshahi",
-    "district": "Bogura",
-    "upazila": "Bogura Sadar",
-    "created_at": "2022-02-03T13:22:12.000000Z",
-    "updated_at": "2022-02-03T13:22:12.000000Z"
-    }
-     */
 
     private int user_id;
     private String patient_name;
@@ -58,24 +42,6 @@ public class bloodRequestModel {
                 "Upazila = " + upazila;
     }
 
-
-    // Original toString();
-    /*
-        @Override
-    public String toString() {
-        return "bloodRequestModel{" +
-                "user_id=" + user_id +
-                ", patient_name='" + patient_name + '\'' +
-                ", patient_diagnosis='" + patient_diagnosis + '\'' +
-                ", blood_group='" + blood_group + '\'' +
-                ", hospital_name='" + hospital_name + '\'' +
-                ", gender='" + gender + '\'' +
-                ", division='" + division + '\'' +
-                ", district='" + district + '\'' +
-                ", upazila='" + upazila + '\'' +
-                '}';
-    }
-     */
 
     public int getUser_id() {
         return user_id;

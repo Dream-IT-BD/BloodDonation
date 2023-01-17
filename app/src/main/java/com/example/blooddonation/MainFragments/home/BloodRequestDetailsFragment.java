@@ -39,7 +39,7 @@ public class BloodRequestDetailsFragment extends Fragment {
     String blood_need;
     int blood_managed = 0;
     private int progressBarStatus = 0;
-    private Handler progressBarHandler = new Handler();
+//    private Handler progressBarHandler = new Handler(); | Delete Test
 
     // ViewBinding
     FragmentBloodRequestDetailsViewBinding binding;
@@ -67,7 +67,6 @@ public class BloodRequestDetailsFragment extends Fragment {
         logedin_user_ID = sharedPreferences.getString("user_ID","");
 
         fetchRequestDetails();
-
         totalManagedDonorCounter();
 
         binding.donateNow.setOnClickListener(new View.OnClickListener() {
@@ -134,15 +133,11 @@ public class BloodRequestDetailsFragment extends Fragment {
             }
         }) ;
         queue.add(stringRequest);
-
     }
 
-
     private void totalManagedDonorCounter() {
-
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/managed-donor/" + id;
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -150,23 +145,17 @@ public class BloodRequestDetailsFragment extends Fragment {
                         Log.d(TAG, "onResponse: @@@@@@@@@@@@@@@              Managed Response : " + response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-
                             JSONArray jsonArray = jsonObject.getJSONArray("managed_donor");
-
                             Log.d(TAG, "onResponse: @@@@@@@@@@         Managed Data : " + jsonArray);
 
                             blood_managed = jsonArray.length();
-
                             binding.tvBloodManaged.setText("রক্ত পাওয়া গেছেঃ " + blood_managed + " ব্যাগ");
-
                             Log.d(TAG, "onResponse: @@@@@@@@@@@@@@               Managed Length : " + blood_managed);
 
                             bloodProgress();
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -177,9 +166,6 @@ public class BloodRequestDetailsFragment extends Fragment {
 
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
-
-
-
     }
 
     private void bloodProgress() {
