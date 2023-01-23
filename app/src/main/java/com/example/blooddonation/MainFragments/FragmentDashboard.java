@@ -20,8 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.blooddonation.HomeElementContainerActivity;
-
+import com.example.blooddonation.DashboardElementContainerActivity;
+import com.example.blooddonation.databinding.FragmentDashboardBinding;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,8 +30,6 @@ public class FragmentDashboard extends Fragment {
 
     FragmentDashboardBinding binding;
     Context mContext;
-    HomeActivityBinding homeActivityBinding;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +53,7 @@ public class FragmentDashboard extends Fragment {
         binding.viewBloodRequests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
+                Intent intent = new Intent(getActivity(), DashboardElementContainerActivity.class);
                 intent.putExtra("frag", "viewBloodRequest");
                 startActivity(intent);
             }
@@ -65,7 +63,7 @@ public class FragmentDashboard extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
+                Intent intent = new Intent(getActivity(), DashboardElementContainerActivity.class);
                 intent.putExtra("frag", "addBloodRequest");
                 startActivity(intent);
             }
@@ -73,7 +71,7 @@ public class FragmentDashboard extends Fragment {
         binding.viewPreviousRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HomeElementContainerActivity.class);
+                Intent intent = new Intent(getActivity(), DashboardElementContainerActivity.class);
                 intent.putExtra("frag", "previousBloodRequest");
                 startActivity(intent);
             }

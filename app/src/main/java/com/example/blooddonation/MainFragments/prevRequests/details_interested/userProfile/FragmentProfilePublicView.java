@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.blooddonation.MainFragments.prevRequests.importantData;
 import com.example.blooddonation.databinding.FragmentProfilePublicViewBinding;
 
 import org.json.JSONArray;
@@ -59,9 +60,9 @@ public class FragmentProfilePublicView extends Fragment {
         token = sharedPreferences.getString("token","");
 
 
-        user_id = getArguments().getString("User_ID");
+        user_id = importantData.USER_ID;
         //blood_request_id = getArguments().getString("blood_request_ID");
-        blood_request_id = "1";
+        blood_request_id = importantData.BLOOD_REQUEST_ID;
         Log.d(TAG, "FargmentProfilePublicView: @@@@@@@@@@@@@              User ID : " + id);
 
 

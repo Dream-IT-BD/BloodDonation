@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BloodDonation">
         <activity
+            android:name=".HomeContainerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DashboardContainerActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainFragments.UserProfile.ActivityEditProfile"
             android:exported="false" />
         <activity
@@ -23,7 +29,7 @@
             android:name=".MainFragments.UserProfile.ActivitySupport"
             android:exported="false" />
         <activity
-            android:name=".HomeElementContainerActivity"
+            android:name=".DashboardElementContainerActivity"
             android:exported="false" />
         <activity
             android:name=".OnlineStatus.NoInternet"

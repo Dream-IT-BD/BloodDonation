@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 
 public class fragmentRequests extends Fragment {
 
+    public static final String TAG = "Fragment Request";
     FragmentRequestsBinding binding;
     Context mContext;
     FragmentStatusAdapter adapter;

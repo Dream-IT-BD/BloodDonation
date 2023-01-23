@@ -26,9 +26,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.blooddonation.HomeElementContainerActivity;
+import com.example.blooddonation.DashboardElementContainerActivity;
 import com.example.blooddonation.MainFragments.prevRequests.fragmentRequests;
 import com.example.blooddonation.R;
+import com.example.blooddonation.databinding.FragmentFindBloodDonorBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -66,7 +67,7 @@ public class FragmentFindBloodDonor extends Fragment {
         super.onAttach(context);
     }
 
-    HomeElementContainerActivity activity = new HomeElementContainerActivity();
+    DashboardElementContainerActivity activity = new DashboardElementContainerActivity();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,11 +141,10 @@ public class FragmentFindBloodDonor extends Fragment {
                         bar.setText("Request Added");
                         bar.show();
 
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.dashboard_container, new fragmentRequests())
-//                                .addToBackStack(null) Removed because onBackPress we need to go back to home but it was keep coming back here.
-                                .commit();
+//                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                        fragmentTransaction.replace(R.id.dashboard_container, new fragmentRequests())
+//                                .commit();
                     }else {
                         Toast.makeText(mContext, "Try Again Letter", Toast.LENGTH_SHORT).show();
                     }

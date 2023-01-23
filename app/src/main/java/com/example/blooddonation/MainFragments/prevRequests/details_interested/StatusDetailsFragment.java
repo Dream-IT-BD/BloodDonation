@@ -30,6 +30,7 @@ import com.ebanx.swipebtn.OnStateChangeListener;
 import com.ebanx.swipebtn.SwipeButton;
 import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.MainFragments.prevRequests.InterestedAndManagedAdapter;
+import com.example.blooddonation.MainFragments.prevRequests.importantData;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.FragmentStatusDetailsBinding;
 import com.google.android.material.tabs.TabLayout;
@@ -81,9 +82,7 @@ public class StatusDetailsFragment extends Fragment {
 
         interestedDonorItems = new ArrayList<>();
         //Get ID From 'RunningRequestAdapter'
-        id = getArguments().getString("id");
-        Log.d(TAG, "onCreate:@@@@@@@@@@@@@@@@@@@@  StatusDetailsFragment Get ID : "+id);
-
+        id = importantData.BLOOD_REQUEST_ID;
 
         // Send ID to FragmentInterestedDonor
         Fragment fragmentInterestedDonor = new FragmentInterestedDonor();
@@ -146,7 +145,7 @@ public class StatusDetailsFragment extends Fragment {
     }
 
     private void fetchRequestDetails() {
-        loadingDialog.show();
+        //loadingDialog.show();
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         String url = "https://blood.dreamitdevlopment.com/public/api/blood-request/view/"+id+"?token="+token;
@@ -154,7 +153,7 @@ public class StatusDetailsFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                loadingDialog.hide();
+                //loadingDialog.hide();
                 try {
                     Log.d(TAG, "onResponse: "+response);
                     JSONObject jsonObject = new JSONObject(response);

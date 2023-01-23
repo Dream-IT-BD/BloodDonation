@@ -60,10 +60,10 @@ public class BloodRequestAdapter extends RecyclerView.Adapter<BloodRequestAdapte
                 arguments.putString("id",data.getId());
                 fragment.setArguments(arguments);
 
-                FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.dashboard_container, fragment);
-//                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.dashboard_container, fragment);
+////                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
 
             }
         });

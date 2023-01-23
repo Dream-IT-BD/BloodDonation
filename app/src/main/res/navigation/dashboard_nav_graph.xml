@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_container"
+    app:startDestination="@id/fragment_requests">
+
+    <fragment
+        android:id="@+id/fragment_requests"
+        android:name="com.example.blooddonation.MainFragments.prevRequests.fragmentRequests"
+        android:label="Your Blood Request"
+        tools:layout="@layout/fragment_requests">
+        <action
+            android:id="@+id/action_fragment_requests_to_fragment_requests_details"
+            app:destination="@id/fragment_requests_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_requests_details"
+        android:name="com.example.blooddonation.MainFragments.prevRequests.details_interested.StatusDetailsFragment"
+        android:label="Request Details"
+        tools:layout="@layout/fragment_status_details">
+        <action
+            android:id="@+id/action_fragment_requests_details_to_fragment_requests"
+            app:destination="@id/fragment_requests" />
+        <action
+            android:id="@+id/action_fragment_requests_details_to_fragment_interested_donor"
+            app:destination="@id/fragment_interested_donor" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_interested_donor"
+        android:name="com.example.blooddonation.MainFragments.prevRequests.details_interested.userProfile.FragmentProfilePublicView"
+        android:label="Interested Donor"
+        tools:layout="@layout/profile_public_view">
+
+        <action
+            android:id="@+id/action_fragment_interested_donor_to_fragment_requests_details"
+            app:destination="@id/fragment_requests_details" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/fragment_give_blood"
+        android:name="com.example.blooddonation.MainFragments.home.FragmentHome"
+        android:label="Donate Blood"
+        tools:layout="@layout/frag_home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_find_donor"
+        android:name="com.example.blooddonation.MainFragments.FragmentFindBloodDonor"
+        tools:layout="@layout/fragment_find_blood_donor">
+    </fragment>
+
+</navigation>

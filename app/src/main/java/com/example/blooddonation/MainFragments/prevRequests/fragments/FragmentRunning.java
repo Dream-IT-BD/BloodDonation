@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -25,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.blooddonation.LoadingDialog;
 import com.example.blooddonation.MainFragments.home.BloodRequestItem;
+import com.example.blooddonation.MainFragments.prevRequests.fragmentRequests;
 import com.example.blooddonation.MainFragments.prevRequests.running.RunningRequestAdapter;
 import com.example.blooddonation.MainFragments.prevRequests.running.RunningRequestItem;
 import com.example.blooddonation.databinding.FragmentRunningBinding;
@@ -38,7 +40,7 @@ import java.util.List;
 
 public class FragmentRunning extends Fragment {
 
-    private static final String TAG = "FragmentRunning";
+    public static final String TAG = "FragmentRunning";
     Context mContext;
     FragmentRunningBinding binding;
     private List<RunningRequestItem> runningRequestItems;
@@ -75,7 +77,7 @@ public class FragmentRunning extends Fragment {
 
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         binding.runningBloodRequestRecycler.setLayoutManager(manager);
-        runningRequestAdapter = new RunningRequestAdapter(runningRequestItems, mContext, this);
+        runningRequestAdapter = new RunningRequestAdapter(runningRequestItems, this);
         binding.runningBloodRequestRecycler.setAdapter(runningRequestAdapter);
 
         return binding.getRoot();
@@ -133,4 +135,6 @@ public class FragmentRunning extends Fragment {
         }) ;
         queue.add(stringRequest);
     }
+
+
 }

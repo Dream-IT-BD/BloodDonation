@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blooddonation.MainFragments.prevRequests.details_interested.userProfile.FragmentProfilePublicView;
+import com.example.blooddonation.MainFragments.prevRequests.importantData;
 import com.example.blooddonation.R;
 import com.example.blooddonation.databinding.InterestedPeopleVecyclerItemBinding;
 
@@ -49,15 +51,9 @@ public class InterestedDonorAdapter extends RecyclerView.Adapter<InterestedDonor
 
             @Override
             public void onClick(View v) {
-                Fragment fragment = new FragmentProfilePublicView();
-                Bundle arguments = new Bundle();
-                arguments.putString("User_ID", data.getUser_id());
-                arguments.putString("blood_request_ID", data.getBlood_request_id());
-                fragment.setArguments(arguments);
+                importantData.USER_ID = data.getUser_id();
 
-                FragmentTransaction fragmentTransaction = parent.requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.dashboard_container, fragment).commit();
-                fragmentTransaction.addToBackStack(null);
+                Navigation.findNavController(parent.requireView()).navigate(R.id.action_fragment_requests_details_to_fragment_interested_donor);
             }
         });
 

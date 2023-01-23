@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.blooddonation.MainFragments.prevRequests.importantData;
 import com.example.blooddonation.databinding.FragmentBloodRequestDetailsViewBinding;
 
 import com.android.volley.Request;
@@ -53,21 +54,22 @@ public class BloodRequestDetailsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        id = importantData.BLOOD_REQUEST_ID;
+        fetchRequestDetails();
+        totalManagedDonorCounter();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentBloodRequestDetailsViewBinding.inflate(inflater,container,false);
-        id = getArguments().getString("id");
+
         Log.d(TAG, "onCreate: fragment id pass ..."+id);
 
         sharedPreferences = mContext.getSharedPreferences("authToken", Context.MODE_PRIVATE);
         logedin_user_ID = sharedPreferences.getString("user_ID","");
 
-        fetchRequestDetails();
-        totalManagedDonorCounter();
+
 
         binding.donateNow.setOnClickListener(new View.OnClickListener() {
             @Override
